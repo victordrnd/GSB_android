@@ -1,13 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
 import { Image, Button } from 'react-native';
 import { createAppContainer } from 'react-navigation';
@@ -20,14 +10,19 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { zoomIn} from 'react-navigation-transitions'
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { RegisterScreen } from './screens/RegisterScreen';
-import MyAccountScreen from './screens/MyAccountScreen';
+import MyAccountScreen from './screens/account/MyAccountScreen';
+import OfflineNotice from './components/OfflineNotice';
+import ProfileScreen from './screens/account/ProfileScreen';
+import MyFraisScreen from './screens/account/MyFraisScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Frais: { screen: FraisScreen },
   Login : {screen : LoginScreen},
   Register : {screen : RegisterScreen},
-  Account : {screen : MyAccountScreen}
+  Account : {screen : MyAccountScreen},
+  Profile : {screen : ProfileScreen},
+  MyFrais : {screen : MyFraisScreen}
 },
   {
     initialRouteName: 'Home',
@@ -73,6 +68,7 @@ export default class App extends React.Component {
     return (
       <PaperProvider theme={theme}>
         <AppContainer ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} />
+        <OfflineNotice />
       </PaperProvider>
     )
   }

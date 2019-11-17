@@ -4,10 +4,9 @@ import {
     View,
     ScrollView,
     StyleSheet,
-    Text
+    Text,
+    Dimensions
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Button, Card, CheckBox } from 'react-native-elements';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import ValidationComponent from 'react-native-form-validator';
 import { RegisterForm } from '../components/Form/RegisterForm';
@@ -31,14 +30,16 @@ export class RegisterScreen extends Component<Props> {
                     <Text style={styles.title}>Inscription</Text>
                     <Text style={styles.subtitle}>Inscrivez vous pour déclarer vos frais.</Text>
                 </View>
-                <RegisterForm></RegisterForm>
-
+                <View style={styles.RegistrationForm}>
+                    <RegisterForm></RegisterForm>
+                </View>
             </View>
         )
     }
 
 }
 
+let ScreenHeight = Dimensions.get("window").height - 156;
 
 const styles = StyleSheet.create({
     headerView: {
@@ -57,5 +58,9 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontStyle: 'italic',
         fontSize: 12
+    },
+    RegistrationForm:{
+        height : ScreenHeight
     }
 });
+

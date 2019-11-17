@@ -55,17 +55,16 @@ export class RegisterForm extends ValidationComponent {
                     <TextInput ref={(password2) => this.password2Input = password2} label="Répétez votre mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password2}
                         onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false}></TextInput>
 
-                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} disabled={(this.state.password != this.state.password2)} />
                 </Card>
+                <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} disabled={(this.state.password != this.state.password2)} />
+                </View>
 
             </>
         )
     }
 
 }
-const messages = {
-    fr: { email: "L'adresse email n'est pas valide" }
-};
 
 const styles = StyleSheet.create({
     inputs: {
@@ -75,8 +74,10 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        marginHorizontal: 10,
-        backgroundColor: '#adb8fa',
-        marginVertical: 10
+        backgroundColor: '#455eee',
+        width: '100%',
+        height: '100%',
+        borderRadius: 0
+
     }
 });

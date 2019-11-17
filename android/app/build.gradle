@@ -77,12 +77,12 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
 project.ext.vectoricons = [
-    iconFontNames: [ 'FontAwesome5_Regular.ttf','FontAwesome5_Solid.ttf', 'FontAwesome.ttf' ] // Name of the font files you want to copy
+    iconFontNames: [ 'FontAwesome5_Regular.ttf','FontAwesome5_Solid.ttf', 'FontAwesome.ttf', 'Feather.ttf' ] // Name of the font files you want to copy
 ]
  
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
