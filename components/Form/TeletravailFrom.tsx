@@ -35,29 +35,35 @@ export default class TeletravailForm extends React.PureComponent {
     render() {
         const { photo } = this.state
         return (
-            <ScrollView>
-                <TextInput label='Montant en €' keyboardType={'numeric'} style={styles.inputs} mode="outlined" value={this.state.montant}
-                    onChangeText={montant => this.setState({ montant })}></TextInput>
+            <>
+                <ScrollView>
+                    <TextInput label='Montant en €' keyboardType={'numeric'} style={styles.inputs} mode="outlined" value={this.state.montant}
+                        onChangeText={montant => this.setState({ montant })}></TextInput>
 
-                <TextInput label="Description" multiline numberOfLines={4} keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.description}
-                    onChangeText={description => this.setState({ description })}></TextInput>
+                    <TextInput label="Description" multiline numberOfLines={4} keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.description}
+                        onChangeText={description => this.setState({ description })}></TextInput>
 
-                <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
-                    <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
-                    <View>
-                        {photo && (
-                            <Image
-                                source={{ uri: photo.uri }}
-                                style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
-                            />
-                        )}
-                    </View>
-                </Card>
+                    <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
+                        <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
+                        <View>
+                            {photo && (
+                                <Image
+                                    source={{ uri: photo.uri }}
+                                    style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
+                                />
+                            )}
+                        </View>
+                    </Card>
 
 
-                <Button title="Envoyer" buttonStyle={styles.confirmButton} />
 
-            </ScrollView>
+
+                </ScrollView>
+                <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
+
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} />
+                </View>
+            </>
         )
     }
 
@@ -79,10 +85,10 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        marginHorizontal: 10,
-        backgroundColor: '#adb8fa',
-        marginVertical: 10
-
+        backgroundColor: '#455eee',
+        width:'100%',
+        height:'100%',
+        borderRadius:0
     },
     uploadButton: {
         width: 250,

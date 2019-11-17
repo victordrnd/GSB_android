@@ -35,30 +35,35 @@ export default class RestaurationForm extends React.PureComponent {
     render() {
         const { photo } = this.state
         return (
-            <View>
-                <TextInput label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.montant}
-                    onChangeText={montant => this.setState({ montant })}></TextInput>
+            <>
+                <View>
+                    <TextInput label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.montant}
+                        onChangeText={montant => this.setState({ montant })}></TextInput>
 
-                <TextInput label="Nom de l'établissement" keyboardType={'default'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.nom}
-                    onChangeText={nom => this.setState({ nom })}></TextInput>
+                    <TextInput label="Nom de l'établissement" keyboardType={'default'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.nom}
+                        onChangeText={nom => this.setState({ nom })}></TextInput>
 
-                <Card title="Justificatif de frais" containerStyle={{borderColor: 'transparent', elevation : 0}}>
-                    
-                    <View>
-                        {photo && (
-                            <Image
-                                source={{ uri: photo.uri }}
-                                style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
-                            />
-                        )}
-                    </View>
-                    <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
-                </Card>
+                    <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
+
+                        <View>
+                            {photo && (
+                                <Image
+                                    source={{ uri: photo.uri }}
+                                    style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
+                                />
+                            )}
+                        </View>
+                        <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
+                    </Card>
 
 
-                <Button title="Envoyer" buttonStyle={styles.confirmButton} />
 
-            </View>
+                </View>
+                <View style={{position: 'absolute', bottom:0,height:50,  width:'100%'}}>
+
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} />
+                </View>
+            </>
         )
     }
 
@@ -80,10 +85,10 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        marginHorizontal: 10,
-        backgroundColor: '#adb8fa',
-        marginVertical: 10
-
+        backgroundColor: '#455eee',
+        width:'100%',
+        height:'100%',
+        borderRadius:0
     },
     uploadButton: {
         width: 250,

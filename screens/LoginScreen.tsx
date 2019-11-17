@@ -31,25 +31,30 @@ export class LoginScreen extends Component<Props> {
 
     render() {
         return (
-            <View>
-                <View style={styles.headerView} >
-                    <Text style={styles.title}>Connexion</Text>
-                    <Text style={styles.subtitle}>Connectez vous pour déclarer vos frais.</Text>
+            <>
+                <View>
+                    <View style={styles.headerView} >
+                        <Text style={styles.title}>Connexion</Text>
+                        <Text style={styles.subtitle}>Connectez vous pour déclarer vos frais.</Text>
+                    </View>
+                    <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
+                        <Text style={{ textAlign: 'center' }}><Icon name="user-circle" size={55} color="#222a5b" /></Text>
+                        <TextInput label="Nom d'utilisateur" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.login}
+                            onChangeText={login => this.setState({ login })}></TextInput>
+
+                        <TextInput label="Mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password}
+                            onChangeText={password => this.setState({ password })}></TextInput>
+
+
+                        <Text style={{ marginTop: 20 }}>Vous n'avez pas encore de compte ? <Text style={{ color: '#455eee' }} onPress={() => this.props.navigation.navigate('Register')}>Créez en un</Text></Text>
+                    </Card>
+                    <Text onPress={() => this.props.navigation.navigate('Account')}>Mon compte</Text>
                 </View>
-                <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
-                    <Text style={{textAlign:'center'}}><Icon name="user-circle" size={55} color="#222a5b"/></Text>
-                    <TextInput label="Nom d'utilisateur" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.login}
-                        onChangeText={login => this.setState({ login })}></TextInput>
+                <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
-                    <TextInput label="Mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password}
-                        onChangeText={password => this.setState({ password })}></TextInput>
-
-
-                    <Button title="Envoyer" buttonStyle={styles.confirmButton} />
-                    <Text style={{marginTop:20}}>Vous n'avez pas encore de compte ? <Text style={{color:'#adb8fa'}} onPress={() => this.props.navigation.navigate('Frais')}>Créez en un</Text></Text>
-                </Card>
-
-            </View>
+                    <Button title="Connexion" buttonStyle={styles.confirmButton} onPress={() => console.log(this.state)} />
+                </View>
+            </>
         )
     }
 
@@ -88,9 +93,10 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        marginHorizontal: 10,
-        backgroundColor: '#adb8fa',
-        marginVertical: 10
+        backgroundColor: '#455eee',
+        width: '100%',
+        height: '100%',
+        borderRadius: 0
 
     }
 });

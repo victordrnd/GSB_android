@@ -38,33 +38,38 @@ export default class DeplacementForm extends React.PureComponent {
     render() {
         const { photo } = this.state
         return (
-            <ScrollView>
-                <TextInput label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.montant}
-                    onChangeText={montant => this.setState({ montant })}></TextInput>
+            <>
+                <ScrollView>
+                    <TextInput label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.montant}
+                        onChangeText={montant => this.setState({ montant })}></TextInput>
 
-                <CheckBox title="Train" checked={this.state.train} onPress={() => this.setState({ train: !this.state.train })} checkedColor="#adb8fa">
-                </CheckBox>
-                <CheckBox title="Avion" checked={this.state.avion} onPress={() => this.setState({ avion: !this.state.avion })} checkedColor="#adb8fa">
-                </CheckBox>
-                <CheckBox title="Voiture" checked={this.state.voiture} onPress={() => this.setState({ voiture: !this.state.voiture })} checkedColor="#adb8fa">
-                </CheckBox>
+                    <CheckBox title="Train" checked={this.state.train} onPress={() => this.setState({ train: !this.state.train })} checkedColor="#adb8fa">
+                    </CheckBox>
+                    <CheckBox title="Avion" checked={this.state.avion} onPress={() => this.setState({ avion: !this.state.avion })} checkedColor="#adb8fa">
+                    </CheckBox>
+                    <CheckBox title="Voiture" checked={this.state.voiture} onPress={() => this.setState({ voiture: !this.state.voiture })} checkedColor="#adb8fa">
+                    </CheckBox>
 
-                <Card title="Justificatif de frais" containerStyle={{borderColor: 'transparent', elevation : 0}}>
-                    <View>
-                        {photo && (
-                            <Image
-                                source={{ uri: photo.uri }}
-                                style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
-                            />
-                        )}
-                    </View>
-                    <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
-                </Card>
+                    <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
+                        <View>
+                            {photo && (
+                                <Image
+                                    source={{ uri: photo.uri }}
+                                    style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
+                                />
+                            )}
+                        </View>
+                        <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
+                    </Card>
 
 
-                <Button title="Envoyer" buttonStyle={styles.confirmButton} />
 
-            </ScrollView>
+                </ScrollView>
+                <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
+
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} />
+                </View>
+            </>
         )
     }
 
@@ -86,10 +91,10 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        marginHorizontal: 10,
-        backgroundColor: '#adb8fa',
-        marginVertical: 10
-
+        backgroundColor: '#455eee',
+        width: '100%',
+        height: '100%',
+        borderRadius: 0
     },
     uploadButton: {
         width: 250,

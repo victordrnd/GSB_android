@@ -68,7 +68,9 @@ export class FraisScreen extends Component<Props> {
                     <Text style={styles.title}>{name}</Text>
                     <Text style={styles.subtitle}>Remplissez la fiche de frais.</Text>
                 </View>
-                {form}
+                <View style={{flex:1}}>
+                    {form}
+                </View>
             </>
         );
     }

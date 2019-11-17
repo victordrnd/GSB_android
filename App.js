@@ -19,11 +19,15 @@ import NavigationService from './services/NavigationService';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { zoomIn} from 'react-navigation-transitions'
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { RegisterScreen } from './screens/RegisterScreen';
+import MyAccountScreen from './screens/MyAccountScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Frais: { screen: FraisScreen },
-  Login : {screen : LoginScreen}
+  Login : {screen : LoginScreen},
+  Register : {screen : RegisterScreen},
+  Account : {screen : MyAccountScreen}
 },
   {
     initialRouteName: 'Home',
@@ -38,7 +42,7 @@ const MainNavigator = createStackNavigator({
       },
       headerTintColor: '#fff',
       headerTitle: <Image source={require('./assets/logo.png')} style={{ width: 40, height: 40 }} />,
-      headerRight: <Icon name="user" size={20} color="white" style={{ marginRight: 20, elevation: 1 }} onPress={() => NavigationService.navigate('Login', {})} />
+      headerRight: <Icon name="user" size={20} color="white" style={{ elevation: 1,padding:20 }} onPress={() => NavigationService.navigate('Login', {})} />
     },
     headerLayoutPreset: 'center',
     transitionConfig: (nav) => zoomIn()
