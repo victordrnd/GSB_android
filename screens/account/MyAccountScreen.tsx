@@ -8,15 +8,26 @@ import {
     Image,
     StatusBar,
     StyleSheet,
-    Text
+    Text,
+    Dimensions
 } from 'react-native';
 import NavigationService from '../../services/NavigationService';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit";
+
+
 const list = [
     {
         name: 'Mes fiches de frais',
         subtitle: 'Gérez vos fiches de frais',
         icon: 'address-card',
-        route : 'MyFrais'
+        route: 'MyFrais'
     },
     {
         name: 'Mon Profil',
@@ -75,6 +86,7 @@ export default class MyAccountScreen extends React.Component {
         };
     };
 
+
     render() {
         return (
             <>
@@ -83,11 +95,16 @@ export default class MyAccountScreen extends React.Component {
                     <Text style={styles.title}>Mon Compte & Activité</Text>
                     <Text style={styles.subtitle}>Accédez à vos déclarations de frais</Text>
 
-                    <LinearGradient style={{ marginTop: 40, height: 150, borderRadius: 8 }} colors={['#3e5be6', '#1f2650']} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
+                    {/* <LinearGradient style={{ marginTop: 40, height: 150, borderRadius: 8 }} colors={['#3e5be6', '#1f2650']} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
 
-                        <Text style={{ color: 'white', padding: 20, fontWeight: '500' }}>Résumé de votre activité :</Text>
-                        <Text style={{ fontSize: 34, color: 'white', textAlign: 'center' }}>50€ <Text style={{ fontSize: 17 }}>En attente</Text></Text>
-                    </LinearGradient>
+                    </LinearGradient> */}
+                    {/* <Text style={{ color: 'white', padding: 20, fontWeight: '500' }}>Résumé de votre activité :</Text>
+                        <Text style={{ fontSize: 34, color: 'white', textAlign: 'center' }}>50€ <Text style={{ fontSize: 17 }}>EUR</Text></Text>
+                        <Text style={{textAlign : 'center', color : '#fff'}}>En attente</Text> */}
+                    <View style={{marginTop : 40}}>
+                        <ContributionGraph values={commitsData} endDate={new Date('2019-11-30')}
+                            numDays={105} width={Dimensions.get('window').width - 30} height={220} chartConfig={chartConfig} />
+                    </View>
                     <View style={{ marginTop: 15 }}>
                         <ListMenu></ListMenu>
                     </View>
@@ -112,3 +129,35 @@ const styles = StyleSheet.create({
         elevation: 0
     }
 })
+
+const commitsData = [
+    { date: "2019-09-14", count: 1 },
+    { date: "2019-09-22", count: 3 },
+    { date: "2019-09-12", count: 2 },
+    { date: "2019-09-02", count: 1 },
+    { date: "2019-10-02", count: 1 },
+    { date: "2019-10-03", count: 2 },
+    { date: "2019-10-04", count: 3 },
+    { date: "2019-10-05", count: 4 },
+    { date: "2019-10-06", count: 5 },
+    { date: "2019-10-30", count: 2 },
+    { date: "2019-11-31", count: 3 },
+    { date: "2019-11-01", count: 2 },
+    { date: "2019-11-02", count: 4 },
+    { date: "2019-11-05", count: 2 },
+    { date: "2019-11-30", count: 4 }
+];
+
+const chartConfig =
+{
+    backgroundColor: "#475ee9",
+    backgroundGradientFrom: "#475ee9",
+    backgroundGradientTo: "#fff",
+    decimalPlaces: 3, // optional, defaults to 2dp
+    color: (opacity = 0.6) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 0.6) => `rgba(255, 255, 255, ${opacity})`,
+    style: {
+        borderRadius: 8,
+        marginTop: 40
+    },
+}

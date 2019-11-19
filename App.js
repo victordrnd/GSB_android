@@ -14,6 +14,7 @@ import MyAccountScreen from './screens/account/MyAccountScreen';
 import OfflineNotice from './components/OfflineNotice';
 import ProfileScreen from './screens/account/ProfileScreen';
 import MyFraisScreen from './screens/account/MyFraisScreen';
+import FraisDetailsScreen from './screens/account/FraisDetailsScreen';
 
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -22,7 +23,8 @@ const MainNavigator = createStackNavigator({
   Register : {screen : RegisterScreen},
   Account : {screen : MyAccountScreen},
   Profile : {screen : ProfileScreen},
-  MyFrais : {screen : MyFraisScreen}
+  MyFrais : {screen : MyFraisScreen},
+  FraisDetails : {screen : FraisDetailsScreen}
 },
   {
     initialRouteName: 'Home',

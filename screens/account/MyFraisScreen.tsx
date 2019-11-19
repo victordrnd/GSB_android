@@ -1,6 +1,5 @@
 import { ListItem, Text, Divider } from 'react-native-elements';
 import React, { Component } from 'react';
-//import Icon from 'react-native-vector-icons/FontAwesome5';
 import Icon from 'react-native-vector-icons/Feather'
 import { List } from 'react-native-paper';
 import {
@@ -13,6 +12,7 @@ import {
     Animated,
     Easing
 } from 'react-native';
+import NavigationService from '../../services/NavigationService';
 
 
 
@@ -94,6 +94,7 @@ export default class MyFraisScreen extends React.Component {
                                 </Animated.View>
                                 }
                                 right={() => <Text style={{}}>+ 50,00 EUR</Text>}
+                                onPress={()=>NavigationService.navigate('FraisDetails', {id : 1})}
                             />
                             <Text>4 nov. 2019</Text>
                             <List.Item
