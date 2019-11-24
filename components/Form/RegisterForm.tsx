@@ -9,30 +9,37 @@ import {
 import { TextInput } from 'react-native-paper';
 import { Button, Card } from 'react-native-elements';
 import ValidationComponent from 'react-native-form-validator';
-
+import UserService from '../../services/UserService';
 
 export class RegisterForm extends ValidationComponent {
 
     state = {
-        nom: '',
-        login: '',
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
         password2: null,
         error: false
     }
+    firstnameInput;
     emailInput;
     passwordInput;
     password2Input;
 
-    submitForm = () => {
+    submitForm =async () => {
         if (this.state.password == this.state.password2) {
             this.validate({
-                login: { minlength: 3, required: true },
+                lastname: { required: true },
+                firstname: { required: true },
                 email: { email: true, required: true },
                 password: { required: true },
                 password2: { required: true }
             });
+            if(this.isFormValid()){
+                await UserService.signup(this.state, (res) => {
+                    console.log(res)
+                });
+            }
         }
     }
 
@@ -43,8 +50,11 @@ export class RegisterForm extends ValidationComponent {
 
                     <Text style={{ textAlign: 'center' }}><Icon name="user-circle" size={55} color="#222a5b" /></Text>
                     <Text style={{ textAlign: 'center', color: 'red' }}>{this.getErrorMessages(',')}</Text>
-                    <TextInput label="Nom d'utilisateur" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.login}
-                        onChangeText={login => this.setState({ login })} onSubmitEditing={() => { this.emailInput.focus(); }} blurOnSubmit={false}></TextInput>
+                    <TextInput label="Nom" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.lastname}
+                        onChangeText={lastname => this.setState({ lastname })} onSubmitEditing={() => { this.firstnameInput.focus(); }} blurOnSubmit={false}></TextInput>
+
+                    <TextInput ref={(firstname) => this.firstnameInput = firstname} label="Prénom" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.firstname}
+                        onChangeText={firstname => this.setState({ firstname })} onSubmitEditing={() => { this.emailInput.focus(); }} blurOnSubmit={false}></TextInput>
 
                     <TextInput ref={(email) => this.emailInput = email} label="Email" keyboardType={'email-address'} style={styles.inputs} mode="outlined" value={this.state.email}
                         onChangeText={email => this.setState({ email })} onSubmitEditing={() => { this.passwordInput.focus(); }} blurOnSubmit={false}></TextInput>
@@ -57,7 +67,7 @@ export class RegisterForm extends ValidationComponent {
 
                 </Card>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
-                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} disabled={(this.state.password != this.state.password2)} />
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
                 </View>
 
             </>

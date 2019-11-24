@@ -8,7 +8,6 @@ import {
     Image,
     StatusBar,
     StyleSheet,
-    TouchableOpacity,
     Animated,
     Easing
 } from 'react-native';

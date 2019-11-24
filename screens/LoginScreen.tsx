@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {
-    View,
-    ScrollView,
-    StyleSheet,
-    Text
-} from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Button, Card } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
-import { Button, Card, CheckBox } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
-
+import UserService from '../services/UserService';
 interface NavigationParams {
     my_param: string; // You can change "string" to what you are using
 }
@@ -23,8 +18,15 @@ interface Props {
 export class LoginScreen extends Component<Props> {
 
     state = {
-        login: '',
+        email: '',
         password: ''
+    }
+
+    async submitForm() {
+        await UserService.login(this.state, async (res) => {
+            await UserService.setAuth(res);
+            this.props.navigation.navigate('Home');
+        });
     }
 
 
@@ -33,14 +35,15 @@ export class LoginScreen extends Component<Props> {
         return (
             <>
                 <View>
+                    <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
                     <View style={styles.headerView} >
                         <Text style={styles.title}>Connexion</Text>
                         <Text style={styles.subtitle}>Connectez vous pour déclarer vos frais.</Text>
                     </View>
                     <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
                         <Text style={{ textAlign: 'center' }}><Icon name="user-circle" size={55} color="#222a5b" /></Text>
-                        <TextInput label="Nom d'utilisateur" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.login}
-                            onChangeText={login => this.setState({ login })}></TextInput>
+                        <TextInput label="Adresse email" keyboardType={'email-address'} style={styles.inputs} mode="outlined" value={this.state.email}
+                            onChangeText={email => this.setState({ email })}></TextInput>
 
                         <TextInput label="Mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password}
                             onChangeText={password => this.setState({ password })}></TextInput>
@@ -52,7 +55,7 @@ export class LoginScreen extends Component<Props> {
                 </View>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
-                    <Button title="Connexion" buttonStyle={styles.confirmButton} onPress={() => console.log(this.state)} />
+                    <Button title="Connexion" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
                 </View>
             </>
         )

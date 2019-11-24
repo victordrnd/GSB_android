@@ -1,7 +1,7 @@
 import { ListItem } from 'react-native-elements';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 import {
     View,
     ScrollView,
@@ -13,12 +13,7 @@ import {
 } from 'react-native';
 import NavigationService from '../../services/NavigationService';
 import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
     ContributionGraph,
-    StackedBarChart
 } from "react-native-chart-kit";
 
 

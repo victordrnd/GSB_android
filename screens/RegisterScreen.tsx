@@ -5,7 +5,8 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    Dimensions
+    Dimensions,
+    StatusBar
 } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import ValidationComponent from 'react-native-form-validator';
@@ -26,6 +27,7 @@ export class RegisterScreen extends Component<Props> {
     render() {
         return (
             <View>
+                <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
                 <View style={styles.headerView} >
                     <Text style={styles.title}>Inscription</Text>
                     <Text style={styles.subtitle}>Inscrivez vous pour déclarer vos frais.</Text>
@@ -39,7 +41,7 @@ export class RegisterScreen extends Component<Props> {
 
 }
 
-let ScreenHeight = Dimensions.get("window").height - 156;
+let ScreenHeight = Dimensions.get("window").height - 100;
 
 const styles = StyleSheet.create({
     headerView: {

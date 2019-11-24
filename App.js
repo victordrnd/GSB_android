@@ -1,30 +1,33 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import { Image, Button } from 'react-native';
+import { Image } from 'react-native';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { HomeScreen } from './screens/HomeScreen';
-import { FraisScreen } from './screens/FraisScreen';
-import {LoginScreen} from './screens/LoginScreen'
-import NavigationService from './services/NavigationService';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import { zoomIn} from 'react-navigation-transitions'
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { RegisterScreen } from './screens/RegisterScreen';
-import MyAccountScreen from './screens/account/MyAccountScreen';
+import { zoomIn, fadeOut } from 'react-navigation-transitions';
 import OfflineNotice from './components/OfflineNotice';
-import ProfileScreen from './screens/account/ProfileScreen';
-import MyFraisScreen from './screens/account/MyFraisScreen';
 import FraisDetailsScreen from './screens/account/FraisDetailsScreen';
-
+import MyAccountScreen from './screens/account/MyAccountScreen';
+import MyFraisScreen from './screens/account/MyFraisScreen';
+import ProfileScreen from './screens/account/ProfileScreen';
+import { FraisScreen } from './screens/FraisScreen';
+import { HomeScreen } from './screens/HomeScreen';
+import { LoginScreen } from './screens/LoginScreen';
+import { RegisterScreen } from './screens/RegisterScreen';
+import {AuthLoadingScreen} from './screens/AuthLoadingScreen';
+import NavigationService from './services/NavigationService';
+import UserService from './services/UserService';
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+import { Transition } from 'react-native-reanimated';
+AsyncStorage.clear();
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Frais: { screen: FraisScreen },
-  Login : {screen : LoginScreen},
-  Register : {screen : RegisterScreen},
-  Account : {screen : MyAccountScreen},
-  Profile : {screen : ProfileScreen},
-  MyFrais : {screen : MyFraisScreen},
-  FraisDetails : {screen : FraisDetailsScreen}
+  Account: { screen: MyAccountScreen },
+  Profile: { screen: ProfileScreen },
+  MyFrais: { screen: MyFraisScreen },
+  FraisDetails: { screen: FraisDetailsScreen }
 },
   {
     initialRouteName: 'Home',
@@ -39,11 +42,22 @@ const MainNavigator = createStackNavigator({
       },
       headerTintColor: '#fff',
       headerTitle: <Image source={require('./assets/logo.png')} style={{ width: 40, height: 40 }} />,
-      headerRight: <Icon name="user" size={20} color="white" style={{ elevation: 1,padding:20 }} onPress={() => NavigationService.navigate('Login', {})} />
+      headerRight: <Icon name="user" size={20} color="white" style={{ elevation: 1, padding: 20 }} onPress={async () => NavigationService.navigate('Account', {})} />
     },
     headerLayoutPreset: 'center',
     transitionConfig: (nav) => zoomIn()
   });
+
+const AuthNavigator = createStackNavigator({
+  Login: { screen: LoginScreen },
+  Register: { screen: RegisterScreen },
+},
+{
+  headerMode : "none",
+  transitionConfig: (nav) => fadeOut()
+})
+
+
 
 
 const theme = {
@@ -53,19 +67,47 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#222a5b',
     accent: '#f1c40f',
-    background : '#222a5b'
+    background: '#222a5b'
   },
 };
 
 
 
+AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
+  {
+    AuthLoading : AuthLoadingScreen,
+    App : MainNavigator,
+    Auth : AuthNavigator
+  },
+  {
+    initialRouteName : 'AuthLoading',
+    transition: (
+      <Transition.Together>
+        <Transition.Out
+          type="slide-bottom"
+          durationMs={400}
+          interpolation="easeIn"
+        />
+        <Transition.In type="fade" durationMs={500} />
+      </Transition.Together>
+    ),
+  }),
+);
 
+const AppContainer = createAppContainer(AppNavigator);
 
-const AppContainer = createAppContainer(MainNavigator);
 
 
 
 export default class App extends React.Component {
+
+  async componentDidMount() {
+    await AsyncStorage.getItem('@token').then(token => {
+      UserService.tokenSubject.next(token);
+    });
+    await UserService.populate();
+  }
+
   render() {
     return (
       <PaperProvider theme={theme}>
