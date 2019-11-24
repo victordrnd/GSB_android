@@ -1,20 +1,11 @@
-import { ListItem } from 'react-native-elements';
-import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import React from 'react';
 // import LinearGradient from 'react-native-linear-gradient';
-import {
-    View,
-    ScrollView,
-    Image,
-    StatusBar,
-    StyleSheet,
-    Text,
-    Dimensions
-} from 'react-native';
+import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ContributionGraph } from "react-native-chart-kit";
+import { ListItem } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import FraisService from '../../services/FraisService';
 import NavigationService from '../../services/NavigationService';
-import {
-    ContributionGraph,
-} from "react-native-chart-kit";
 
 
 const list = [
@@ -58,7 +49,6 @@ const ListMenu = () =>
 export default class MyAccountScreen extends React.Component {
     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
-
         return {
             headerStyle: {
                 backgroundColor: '#fff',
@@ -77,10 +67,19 @@ export default class MyAccountScreen extends React.Component {
                 </View>
             ),
             headerRight: <Icon name="user" size={20} color="white" style={{ elevation: 1, padding: 20 }} />
-
         };
     };
 
+
+    state = {
+        commitsData : []
+    }
+
+    componentDidMount(){
+        FraisService.getMyFraisByDate((data) => {
+            this.setState({commitsData : data});
+        });
+    }
 
     render() {
         return (
@@ -97,7 +96,7 @@ export default class MyAccountScreen extends React.Component {
                         <Text style={{ fontSize: 34, color: 'white', textAlign: 'center' }}>50€ <Text style={{ fontSize: 17 }}>EUR</Text></Text>
                         <Text style={{textAlign : 'center', color : '#fff'}}>En attente</Text> */}
                     <View style={{marginTop : 40}}>
-                        <ContributionGraph values={commitsData} endDate={new Date('2019-11-30')}
+                        <ContributionGraph values={this.state.commitsData} endDate={new Date()}
                             numDays={105} width={Dimensions.get('window').width - 30} height={220} chartConfig={chartConfig} />
                     </View>
                     <View style={{ marginTop: 15 }}>
@@ -125,23 +124,23 @@ const styles = StyleSheet.create({
     }
 })
 
-const commitsData = [
-    { date: "2019-09-14", count: 1 },
-    { date: "2019-09-22", count: 3 },
-    { date: "2019-09-12", count: 2 },
-    { date: "2019-09-02", count: 1 },
-    { date: "2019-10-02", count: 1 },
-    { date: "2019-10-03", count: 2 },
-    { date: "2019-10-04", count: 3 },
-    { date: "2019-10-05", count: 4 },
-    { date: "2019-10-06", count: 5 },
-    { date: "2019-10-30", count: 2 },
-    { date: "2019-11-31", count: 3 },
-    { date: "2019-11-01", count: 2 },
-    { date: "2019-11-02", count: 4 },
-    { date: "2019-11-05", count: 2 },
-    { date: "2019-11-30", count: 4 }
-];
+// const commitsData = [
+//     { date: "2019-09-14", count: 1 },
+//     { date: "2019-09-22", count: 3 },
+//     { date: "2019-09-12", count: 2 },
+//     { date: "2019-09-02", count: 1 },
+//     { date: "2019-10-02", count: 1 },
+//     { date: "2019-10-03", count: 2 },
+//     { date: "2019-10-04", count: 3 },
+//     { date: "2019-10-05", count: 4 },
+//     { date: "2019-10-06", count: 5 },
+//     { date: "2019-10-30", count: 2 },
+//     { date: "2019-11-31", count: 3 },
+//     { date: "2019-11-01", count: 2 },
+//     { date: "2019-11-02", count: 4 },
+//     { date: "2019-11-05", count: 2 },
+//     { date: "2019-11-30", count: 4 }
+// ];
 
 const chartConfig =
 {

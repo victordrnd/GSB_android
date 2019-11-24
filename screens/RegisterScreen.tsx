@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import {
     View,
-    ScrollView,
     StyleSheet,
     Text,
     Dimensions,
-    StatusBar
+    StatusBar,
+    ScrollView
 } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
-import ValidationComponent from 'react-native-form-validator';
 import { RegisterForm } from '../components/Form/RegisterForm';
 
 interface NavigationParams {
@@ -26,7 +24,7 @@ export class RegisterScreen extends Component<Props> {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
                 <View style={styles.headerView} >
                     <Text style={styles.title}>Inscription</Text>
@@ -35,7 +33,7 @@ export class RegisterScreen extends Component<Props> {
                 <View style={styles.RegistrationForm}>
                     <RegisterForm></RegisterForm>
                 </View>
-            </View>
+            </ScrollView>
         )
     }
 

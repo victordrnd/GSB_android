@@ -10,6 +10,7 @@ import { TextInput } from 'react-native-paper';
 import { Button, Card } from 'react-native-elements';
 import ValidationComponent from 'react-native-form-validator';
 import UserService from '../../services/UserService';
+import NavigationService from '../../services/NavigationService';
 
 export class RegisterForm extends ValidationComponent {
 
@@ -26,7 +27,7 @@ export class RegisterForm extends ValidationComponent {
     passwordInput;
     password2Input;
 
-    submitForm =async () => {
+    submitForm = async () => {
         if (this.state.password == this.state.password2) {
             this.validate({
                 lastname: { required: true },
@@ -35,9 +36,10 @@ export class RegisterForm extends ValidationComponent {
                 password: { required: true },
                 password2: { required: true }
             });
-            if(this.isFormValid()){
+            if (this.isFormValid()) {
                 await UserService.signup(this.state, (res) => {
-                    console.log(res)
+                    UserService.setAuth(res);
+                    NavigationService.navigate('Home', {});
                 });
             }
         }
@@ -65,7 +67,9 @@ export class RegisterForm extends ValidationComponent {
                     <TextInput ref={(password2) => this.password2Input = password2} label="Répétez votre mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password2}
                         onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false}></TextInput>
 
+                    <Text style={{ marginTop: 20, textAlign : "center" }}>Vous avez déjà un  compte ? <Text style={{ color: '#455eee' }} onPress={() => NavigationService.navigate('Login', {})}>Connectez vous</Text></Text>
                 </Card>
+
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
                     <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
                 </View>

@@ -1,9 +1,9 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions, StatusBar, Image } from 'react-native';
-import { TextInput, ActivityIndicator } from 'react-native-paper';
+import { Dimensions, Image, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import UserService from '../services/UserService';
-import AsyncStorage from '@react-native-community/async-storage';
 interface NavigationParams {
     my_param: string; // You can change "string" to what you are using
 }

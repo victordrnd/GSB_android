@@ -45,6 +45,7 @@ export default class ProfileScreen extends React.Component {
 
         };
     };
+    
     state = {
         phone: "06 11 28 62 86",
         lastLogin : '2019-11-16 17:34',

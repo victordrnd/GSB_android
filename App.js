@@ -2,25 +2,51 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { Image } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Transition } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { createStackNavigator } from 'react-navigation-stack';
-import { zoomIn, fadeOut } from 'react-navigation-transitions';
+import { fadeOut, zoomIn } from 'react-navigation-transitions';
 import OfflineNotice from './components/OfflineNotice';
 import FraisDetailsScreen from './screens/account/FraisDetailsScreen';
 import MyAccountScreen from './screens/account/MyAccountScreen';
 import MyFraisScreen from './screens/account/MyFraisScreen';
 import ProfileScreen from './screens/account/ProfileScreen';
+import { AuthLoadingScreen } from './screens/AuthLoadingScreen';
 import { FraisScreen } from './screens/FraisScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { LoginScreen } from './screens/LoginScreen';
 import { RegisterScreen } from './screens/RegisterScreen';
-import {AuthLoadingScreen} from './screens/AuthLoadingScreen';
 import NavigationService from './services/NavigationService';
+import Service from './services/Service';
 import UserService from './services/UserService';
-import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
-import { Transition } from 'react-native-reanimated';
+
+//TODO delete
 AsyncStorage.clear();
+export default class App extends React.Component {
+  async componentDidMount() {
+    await AsyncStorage.getItem('@token').then( async (token) => {
+      UserService.tokenSubject.next(token);
+      Service.token = token;
+    });
+    await UserService.populate();
+  }
+
+  render() {
+    return (
+      <PaperProvider theme={theme}>
+        <AppContainer ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} />
+        <OfflineNotice />
+      </PaperProvider>
+    )
+  }
+}
+
+
+
+
+
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Frais: { screen: FraisScreen },
@@ -95,25 +121,3 @@ AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
 );
 
 const AppContainer = createAppContainer(AppNavigator);
-
-
-
-
-export default class App extends React.Component {
-
-  async componentDidMount() {
-    await AsyncStorage.getItem('@token').then(token => {
-      UserService.tokenSubject.next(token);
-    });
-    await UserService.populate();
-  }
-
-  render() {
-    return (
-      <PaperProvider theme={theme}>
-        <AppContainer ref={navigatorRef => { NavigationService.setTopLevelNavigator(navigatorRef) }} />
-        <OfflineNotice />
-      </PaperProvider>
-    )
-  }
-}

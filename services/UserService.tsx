@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import Service from './Service';
 
-
 class UserService {
 
     http: AxiosInstance
@@ -50,7 +49,6 @@ class UserService {
     async login(obj, callback) {
         this.http.post(`${environment.apiUrl}/auth/login`, obj)
             .then((res) => {
-                console.log(res.data);
                 callback(res.data.result);
             })
             .catch((error) => {
@@ -71,6 +69,7 @@ class UserService {
 
     async setAuth({ user, token }) {
         await AsyncStorage.setItem('@token', token);
+        Service.token = token;
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
     }

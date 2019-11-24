@@ -1,16 +1,28 @@
 import axios, { AxiosInstance } from 'axios';
-import UserService from './UserService';
 
 
 class Service {
 
-    http: AxiosInstance;
-    constructor() {
-        axios.interceptors.request.use((config) => {
-            config.headers = {"Authorization" : "Bearer " + UserService.getToken()}
-            return config;
-        });
+    static instance : AxiosInstance;
+    static token : string;
+
+    static getInstance() : AxiosInstance{
+        if(Service.instance == undefined){
+            Service.instance = axios;
+            Service.instance.interceptors.request.use((config) => {
+                if(Service.token){
+                    config.headers.Authorization = "Bearer " + Service.token
+                }
+                return config;
+            });
+        }
+
+        return Service.instance;
     }
+
+    private constructor() {
+    }
+  
 }
 
-export default new Service();
+export default Service;

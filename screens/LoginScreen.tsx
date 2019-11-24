@@ -49,9 +49,8 @@ export class LoginScreen extends Component<Props> {
                             onChangeText={password => this.setState({ password })}></TextInput>
 
 
-                        <Text style={{ marginTop: 20 }}>Vous n'avez pas encore de compte ? <Text style={{ color: '#455eee' }} onPress={() => this.props.navigation.navigate('Register')}>Créez en un</Text></Text>
+                        <Text style={{ marginTop: 20, textAlign : "center" }}>Vous n'avez pas encore de compte ? <Text style={{ color: '#455eee' }} onPress={() => this.props.navigation.navigate('Register')}>Créez en un</Text></Text>
                     </Card>
-                    <Text onPress={() => this.props.navigation.navigate('Account')}>Mon compte</Text>
                 </View>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
