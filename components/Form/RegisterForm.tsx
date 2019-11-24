@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
-    ScrollView,
     StyleSheet,
-    Text
+    Text,
+    Alert
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Button, Card } from 'react-native-elements';
+import { Button, Card, Input } from 'react-native-elements';
 import ValidationComponent from 'react-native-form-validator';
 import UserService from '../../services/UserService';
 import NavigationService from '../../services/NavigationService';
@@ -28,48 +27,57 @@ export class RegisterForm extends ValidationComponent {
     password2Input;
 
     submitForm = async () => {
-        if (this.state.password == this.state.password2) {
-            this.validate({
-                lastname: { required: true },
-                firstname: { required: true },
-                email: { email: true, required: true },
-                password: { required: true },
-                password2: { required: true }
-            });
-            if (this.isFormValid()) {
+        this.validate({
+            lastname: { required: true },
+            firstname: { required: true },
+            email: { email: true, required: true },
+            password: { required: true },
+            password2: { required: true }
+        });
+        if (this.isFormValid()) {
+            if (this.state.password == this.state.password2) {
                 await UserService.signup(this.state, (res) => {
                     UserService.setAuth(res);
                     NavigationService.navigate('Home', {});
                 });
+            }else{
+                Alert.alert('Erreur de saisie' , "Les mots de passes ne correspondent pas");
             }
+        }else{
+            Alert.alert('Erreur de saisie' , 'Les champs ne sont pas correctement remplis');
         }
     }
 
     render() {
         return (
             <>
-                <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
+                <View style={{ marginTop: -30 }}>
 
-                    <Text style={{ textAlign: 'center' }}><Icon name="user-circle" size={55} color="#222a5b" /></Text>
-                    <Text style={{ textAlign: 'center', color: 'red' }}>{this.getErrorMessages(',')}</Text>
-                    <TextInput label="Nom" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.lastname}
-                        onChangeText={lastname => this.setState({ lastname })} onSubmitEditing={() => { this.firstnameInput.focus(); }} blurOnSubmit={false}></TextInput>
+                    <Card containerStyle={{ borderColor: 'transparent', elevation: 0, margin: -1, borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
+                        <Text style={styles.title}>Inscription</Text>
+                        <Input label="Nom" keyboardType={'default'} style={styles.inputs} value={this.state.lastname} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={lastname => this.setState({ lastname })} onSubmitEditing={() => { this.firstnameInput.focus(); }} blurOnSubmit={false}
+                            leftIcon={<Icon name='user' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                    <TextInput ref={(firstname) => this.firstnameInput = firstname} label="Prénom" keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.firstname}
-                        onChangeText={firstname => this.setState({ firstname })} onSubmitEditing={() => { this.emailInput.focus(); }} blurOnSubmit={false}></TextInput>
+                        <Input ref={(firstname) => this.firstnameInput = firstname} label="Prénom" keyboardType={'default'} style={styles.inputs} value={this.state.firstname} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={firstname => this.setState({ firstname })} onSubmitEditing={() => { this.emailInput.focus(); }} blurOnSubmit={false}
+                            leftIcon={<Icon name='user' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                    <TextInput ref={(email) => this.emailInput = email} label="Email" keyboardType={'email-address'} style={styles.inputs} mode="outlined" value={this.state.email}
-                        onChangeText={email => this.setState({ email })} onSubmitEditing={() => { this.passwordInput.focus(); }} blurOnSubmit={false}></TextInput>
+                        <Input ref={(email) => this.emailInput = email} label="Email" keyboardType={'email-address'} style={styles.inputs} value={this.state.email} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={email => this.setState({ email })} onSubmitEditing={() => { this.passwordInput.focus(); }} blurOnSubmit={false}
+                            leftIcon={<Icon name='mail' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                    <TextInput ref={(password) => this.passwordInput = password} label="Mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password}
-                        onChangeText={password => this.setState({ password })} onSubmitEditing={() => { this.password2Input.focus(); }} blurOnSubmit={false}></TextInput>
+                        <Input ref={(password) => this.passwordInput = password} label="Mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={password => this.setState({ password })} onSubmitEditing={() => { this.password2Input.focus(); }} blurOnSubmit={false}
+                            leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                    <TextInput ref={(password2) => this.password2Input = password2} label="Répétez votre mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password2}
-                        onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false}></TextInput>
+                        <Input ref={(password2) => this.password2Input = password2} label="Répétez votre mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password2} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false} onSubmitEditing={() => { this.submitForm; }}
+                            leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                    <Text style={{ marginTop: 20, textAlign : "center" }}>Vous avez déjà un  compte ? <Text style={{ color: '#455eee' }} onPress={() => NavigationService.navigate('Login', {})}>Connectez vous</Text></Text>
-                </Card>
+                    </Card>
 
+                </View>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
                     <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
                 </View>
@@ -92,6 +100,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 0
-
-    }
+    },
+    title: {
+        color: '#000',
+        fontSize: 28,
+        fontWeight: "bold",
+        margin: 20
+    },
 });

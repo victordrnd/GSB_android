@@ -11,20 +11,20 @@ class FraisService {
     }
 
 
-    async getMyFrais() : Promise<any> {
+    async getMyFrais(callback) : Promise<any> {
         this.http.get(`${environment.apiUrl}/frais/my`)
             .then(res => {
-                return res.data.result
+                callback(res.data.result)
             })
             .catch(error => {
                 console.info(error.response.data)
             })
     }
 
-    async create(obj) : Promise<any>{
+    async create(obj, callback) : Promise<any>{
         this.http.post(`${environment.apiUrl}/frais/create`, obj)
             .then(res => {
-                return res.data.result
+                callback(res.data.result);
             })
             .catch(error => {
                 console.info(error.response.data)                

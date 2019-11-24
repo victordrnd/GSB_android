@@ -1,13 +1,12 @@
 import React, { PureComponent } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     ScrollView,
     StyleSheet,
     Image
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import { Button, Card } from 'react-native-elements';
+import { Button, Card, Input } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker'
 
 
@@ -37,11 +36,11 @@ export default class TeletravailForm extends React.PureComponent {
         return (
             <>
                 <ScrollView>
-                    <TextInput label='Montant en €' keyboardType={'numeric'} style={styles.inputs} mode="outlined" value={this.state.montant}
-                        onChangeText={montant => this.setState({ montant })}></TextInput>
+                    <Input label='Montant en €' keyboardType={'numeric'} style={styles.inputs} value={this.state.montant} leftIcon={<Icon name='credit-card' size={24} color='grey' style={{marginLeft : -15}}/>}
+                        onChangeText={montant => this.setState({ montant })} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}></Input>
 
-                    <TextInput label="Description" multiline numberOfLines={4} keyboardType={'default'} style={styles.inputs} mode="outlined" value={this.state.description}
-                        onChangeText={description => this.setState({ description })}></TextInput>
+                    <Input label="Description" multiline numberOfLines={4} keyboardType={'default'} style={styles.inputs} value={this.state.description}
+                        onChangeText={description => this.setState({ description })} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}></Input>
 
                     <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
                         <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#222a5b'
+        borderColor: '#455eee'
     },
     confirmButton: {
         backgroundColor: '#455eee',
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
     },
     uploadButton: {
         width: 250,
-        backgroundColor: '#222a5b',
+        backgroundColor: '#455eee',
         marginVertical: 20,
         justifyContent: 'center',
         alignSelf: 'center'

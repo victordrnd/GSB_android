@@ -23,7 +23,7 @@ import Service from './services/Service';
 import UserService from './services/UserService';
 
 //TODO delete
-AsyncStorage.clear();
+// AsyncStorage.clear();
 export default class App extends React.Component {
   async componentDidMount() {
     await AsyncStorage.getItem('@token').then( async (token) => {
@@ -59,7 +59,7 @@ const MainNavigator = createStackNavigator({
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#222a5b',
+        backgroundColor: '#455eee',
         shadowOffset: { width: 0, height: 0, },
         shadowColor: 'white',
         shadowOpacity: 0,

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import { Button, Card } from 'react-native-elements';
+import { StyleSheet, Text, View, StatusBar, Dimensions, Image } from 'react-native';
+import { Button, Card, Input } from 'react-native-elements';
 import { TextInput } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Feather';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import UserService from '../services/UserService';
 interface NavigationParams {
@@ -35,25 +35,35 @@ export class LoginScreen extends Component<Props> {
         return (
             <>
                 <View>
-                    <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
+                    <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
                     <View style={styles.headerView} >
-                        <Text style={styles.title}>Connexion</Text>
-                        <Text style={styles.subtitle}>Connectez vous pour déclarer vos frais.</Text>
+                        <Image source={require('../assets/logo.png')} style={{ width: 80, height: 80, alignSelf: "center", marginTop: 20, paddingBottom: 20 }} />
+                        <View>
+                            <View style={{ width: "50%", position: "absolute", top: 15 }}>
+                                <Text style={styles.switch1}>Connexion</Text>
+                            </View>
+                            <View style={{ width: "50%", position: "absolute", left: "50%", top: 15 }}>
+                                <Text style={styles.switch2} onPress={() => this.props.navigation.navigate('Register') }>Inscription</Text>
+                            </View>
+                        </View>
                     </View>
-                    <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
-                        <Text style={{ textAlign: 'center' }}><Icon name="user-circle" size={55} color="#222a5b" /></Text>
-                        <TextInput label="Adresse email" keyboardType={'email-address'} style={styles.inputs} mode="outlined" value={this.state.email}
-                            onChangeText={email => this.setState({ email })}></TextInput>
+                    <View style={{ marginTop: -30 }}>
 
-                        <TextInput label="Mot de passe" secureTextEntry={true} style={styles.inputs} mode="outlined" value={this.state.password}
-                            onChangeText={password => this.setState({ password })}></TextInput>
+                        <Card containerStyle={{ borderColor: 'transparent', elevation: 0, margin: -1, borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
+                            <Text style={styles.title}>Connexion</Text>
+                            <Input label="Adresse email" keyboardType={'email-address'} inputStyle={styles.inputs} value={this.state.email} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                                onChangeText={email => this.setState({ email })}
+                                leftIcon={<Icon name='mail' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
+                            <Input label="Mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                                onChangeText={password => this.setState({ password })}
+                                leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                        <Text style={{ marginTop: 20, textAlign : "center" }}>Vous n'avez pas encore de compte ? <Text style={{ color: '#455eee' }} onPress={() => this.props.navigation.navigate('Register')}>Créez en un</Text></Text>
-                    </Card>
+                            <Text style={{ marginTop: 20, textAlign: "right",color: '#455eee' }}>Mot de passe oublié ?</Text>
+                        </Card>
+                    </View>
                 </View>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
-
                     <Button title="Connexion" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
                 </View>
             </>
@@ -65,16 +75,15 @@ export class LoginScreen extends Component<Props> {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#222a5b',
-        height: 100,
+        backgroundColor: '#455eee',
+        height: 200,
         padding: 10,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
     },
     title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: 'bold'
+        color: '#000',
+        fontSize: 28,
+        fontWeight: "bold",
+        margin: 20
     },
     subtitle: {
         color: '#fff',
@@ -88,8 +97,19 @@ const styles = StyleSheet.create({
         color: 'grey',
 
     },
+    switch1: {
+        color: '#fff',
+        fontSize: 20,
+        textAlign: "center"
+    },
+    switch2: {
+        color: '#fff',
+        fontSize: 20,
+        textAlign: "center",
+        opacity: 0.5
+    },
     inputs: {
-        marginVertical: 10,
+        marginVertical: 0,
         marginHorizontal: 10,
         backgroundColor: '#fff',
         borderColor: '#222a5b'
@@ -99,6 +119,5 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         borderRadius: 0
-
     }
 });

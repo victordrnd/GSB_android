@@ -4,41 +4,59 @@ import Icon from 'react-native-vector-icons/Feather'
 import { List } from 'react-native-paper';
 import {
     View,
-    ScrollView,
     Image,
     StatusBar,
     StyleSheet,
-    Animated,
-    Easing
+    ActivityIndicator
 } from 'react-native';
 import NavigationService from '../../services/NavigationService';
+import FraisService from '../../services/FraisService';
+import Moment from 'react-moment';
+import ListFrais from '../../components/ListFrais';
 
 
-
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 
 export default class MyFraisScreen extends React.Component {
-    spinValue;
     constructor(props) {
         super(props);
-        this.spinValue = new Animated.Value(0)
+    };
+
+    state = {
+        frais: []
     }
 
     componentDidMount() {
-        this.spin()
+        FraisService.getMyFrais((frais) => {
+            this.setState({ frais });
+        });
     }
-    spin() {
-        this.spinValue.setValue(0)
-        Animated.timing(
-            this.spinValue,
-            {
-                toValue: 1,
-                duration: 3000,
-                easing: Easing.linear
-            }
-        ).start(() => this.spin())
+
+
+
+
+    render() {
+
+        return (
+            <>
+                <StatusBar backgroundColor='#fff' barStyle="dark-content"></StatusBar>
+                <View style={{ marginHorizontal: 15 }}>
+                    <Text style={styles.title}>Mes fiches de frais</Text>
+                    <Text style={styles.subtitle}>Historique de vos déclaration</Text>
+
+                    <View style={{ marginTop: 15 }}>
+                        <List.Section>
+                            <ListFrais></ListFrais>
+                        </List.Section>
+                    </View>
+                </View>
+            </>
+        )
     }
+
+
+
+
 
     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
@@ -70,77 +88,11 @@ export default class MyFraisScreen extends React.Component {
 
 
 
-    render() {
-        const spin = this.spinValue.interpolate({
-            inputRange: [0, 1],
-            outputRange: ['0deg', '360deg']
-        })
-        return (
-            <>
-                <StatusBar backgroundColor='#fff' barStyle="dark-content"></StatusBar>
-                <View style={{ marginHorizontal: 15 }}>
-                    <Text style={styles.title}>Mes fiches de frais</Text>
-                    <Text style={styles.subtitle}>Historique de vos déclaration</Text>
-
-                    <View style={{ marginTop: 15 }}>
-                        <List.Section>
-                            <Text>17 nov. 2019</Text>
-                            <List.Item
-                                title="Frais de déplacement"
-                                description="En cours de vérification"
-                                left={() => <Animated.View style={{ backgroundColor: "transparent", borderRadius: 100, width: 50, height: 50, transform: [{ rotate: spin }] }}>
-                                    <Icon name="loader" size={25} color="#fbc02d" style={{ marginTop: 12, alignSelf: 'center' }} />
-                                </Animated.View>
-                                }
-                                right={() => <Text style={{}}>+ 50,00 EUR</Text>}
-                                onPress={()=>NavigationService.navigate('FraisDetails', {id : 1})}
-                            />
-                            <Text>4 nov. 2019</Text>
-                            <List.Item
-                                title="Frais de restauration"
-                                description="Validé"
-                                left={() => <View style={{ backgroundColor: "transparent", borderRadius: 100, width: 50, height: 50 }}>
-                                    <Icon name="check" size={25} color="#7cb342" style={{ marginTop: 12, alignSelf: 'center' }} />
-                                </View>
-                                }
-                                right={() => <Text style={{}}>+ 8,00 EUR</Text>}
-                            />
-                            <Text>12 oct. 2019</Text>
-                            <List.Item
-                                title="Frais de déplacement"
-                                description="Validé"
-                                left={() => <View style={{ backgroundColor: "transparent", borderRadius: 100, width: 50, height: 50 }}>
-                                    <Icon name="check" size={25} color="#7cb342" style={{ marginTop: 12, alignSelf: 'center' }} />
-                                </View>
-                                }
-                                right={() => <Text style={{}}>+ 50,00 EUR</Text>}
-                            />
-                            <Text>6 oct. 2019</Text>
-                            <List.Item
-                                title="Frais de restauration"
-                                description="Refusé"
-                                left={() => <View style={{ backgroundColor: "transparent", borderRadius: 100, width: 50, height: 50 }}>
-                                    <Icon name="x" size={25} color="#e53935" style={{ marginTop: 12, alignSelf: 'center' }} />
-                                </View>
-                                }
-                                right={() => <Text style={{}}>+ 13,00 EUR</Text>}
-                            />
-                            <List.Item
-                                title="Frais de déplacement"
-                                description="Validé"
-                                left={() => <View style={{ backgroundColor: "transparent", borderRadius: 100, width: 50, height: 50 }}>
-                                    <Icon name="check" size={25} color="#7cb342" style={{ marginTop: 12, alignSelf: 'center' }} />
-                                </View>
-                                }
-                                right={() => <Text style={{}}>+ 150,00 EUR</Text>}
-                            />
-                        </List.Section>
-                    </View>
-                </View>
-            </>
-        )
-    }
 }
+
+
+
+
 
 const styles = StyleSheet.create({
     title: {
@@ -170,3 +122,13 @@ const styles = StyleSheet.create({
 
     }
 })
+
+
+const calendarStrings = {
+    lastDay: '[Hier à] HH:mm',
+    sameDay: "[Aujourd'hui à] HH:mm",
+    nextDay: '[Tomorrow à] LT',
+    lastWeek: '[last] dddd [à] LT',
+    nextWeek: 'dddd [à] LT',
+    sameElse: 'L'
+};

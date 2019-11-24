@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     ScrollView,
@@ -7,7 +7,7 @@ import {
     Image
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { Button, Card, CheckBox } from 'react-native-elements';
+import { Button, Card, CheckBox, Input } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker'
 
 
@@ -40,8 +40,9 @@ export default class DeplacementForm extends React.PureComponent {
         return (
             <>
                 <ScrollView>
-                    <TextInput label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} mode="outlined" value={this.state.montant}
-                        onChangeText={montant => this.setState({ montant })}></TextInput>
+                    <Input label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.montant} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                        onChangeText={montant => this.setState({ montant })}
+                        leftIcon={<Icon name='credit-card' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
                     <CheckBox title="Train" checked={this.state.train} onPress={() => this.setState({ train: !this.state.train })} checkedColor="#adb8fa">
                     </CheckBox>
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#222a5b'
+        borderColor: '#455eee'
     },
     confirmButton: {
         backgroundColor: '#455eee',
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     },
     uploadButton: {
         width: 250,
-        backgroundColor: '#222a5b',
+        backgroundColor: '#455eee',
         marginVertical: 20,
         justifyContent: 'center',
         alignSelf: 'center'

@@ -21,11 +21,9 @@ interface Props {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#222a5b',
+        backgroundColor: '#455eee',
         height: 100,
         padding: 10,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
     },
     title: {
         color: '#fff',
@@ -62,13 +60,13 @@ export class FraisScreen extends Component<Props> {
         }
         return (
             <>
-                <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
+                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
 
                 <View style={styles.headerView}>
                     <Text style={styles.title}>{name}</Text>
                     <Text style={styles.subtitle}>Remplissez la fiche de frais.</Text>
                 </View>
-                <View style={{flex:1}}>
+                <View style={{flex:1, marginTop:-30, backgroundColor:"#fff",margin: -1, borderTopLeftRadius: 25, borderTopRightRadius: 25, paddingTop : 50}}>
                     {form}
                 </View>
             </>

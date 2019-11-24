@@ -34,7 +34,7 @@ export class AuthLoadingScreen extends Component<Props> {
             <>
             <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
             <View style={{backgroundColor: "#455eee", height:"100%", width:"100%"}}>
-                <Image source={ require('../assets/logo.png')} style={{alignSelf : "center", marginTop : 150}}></Image>
+                <Image source={ require('../assets/logo-white2x.png')} style={{alignSelf : "center", marginTop : 150}}></Image>
                 <ActivityIndicator color="#fff" size="large" style={{marginTop : Dimensions.get('window').height/2 - 150}}/>
             </View>
             </>

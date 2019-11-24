@@ -16,11 +16,9 @@ interface Props {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#222a5b',
+        backgroundColor: '#455eee',
         height: 100,
-        padding: 10,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
+        padding: 10
     },
     title: {
         color: '#fff',
@@ -45,13 +43,16 @@ export class HomeScreen extends React.Component<Props> {
         return (
             <View>
 
-                <StatusBar backgroundColor='#222a5b' barStyle='light-content'></StatusBar>
+                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
 
-                    <View style={styles.headerView} >
-                        <Text style={styles.title}>Accueil</Text>
-                        <Text style={styles.subtitle}>Enregistrez vos frais Galaxy Swiss Bourdin</Text>
-                    </View>
+                <View style={styles.headerView} >
+                    <Text style={styles.title}>Accueil</Text>
+                    <Text style={styles.subtitle}>Enregistrez vos frais Galaxy Swiss Bourdin</Text>
+                </View>
+                <View style={{marginTop : -30, margin: -1, borderTopLeftRadius: 25, borderTopRightRadius: 25 , backgroundColor : "#fff"}}>
+
                     <Menu />
+                </View>
             </View>
         );
     }
