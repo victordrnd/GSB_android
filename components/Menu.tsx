@@ -47,9 +47,10 @@ const ListMenu = () =>
                             key={i}
                             title={l.name}
                             leftAvatar={<Icon name={l.icon} size={20} color="#455eee" />}
-                            titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                            titleStyle={{ color: 'black', fontFamily : "ProductSansBold" }}
                             chevron={<Icon name="chevron-right" size={15} color="grey" />}
                             subtitle={l.subtitle}
+                            subtitleStyle={{fontFamily : "ProductSansItalic"}}
                             style={{ marginVertical: 15 }}
                             onPress={() => NavigationService.navigate('Frais', { name: l.name })}
                         />

@@ -81,10 +81,10 @@ export default class ProfileScreen extends React.Component {
                             }
                         </TouchableOpacity>
                         <Text h4 style={{ textAlign: 'center' }}>Victor Durand</Text>
-                        <Text style={{ textAlign: 'center', color: 'grey' }}>Visiteur chez Galaxy Swiss Bourdin</Text>
+                        <Text style={{ textAlign: 'center', color: 'grey', fontFamily:"ProductSansItalic" }}>Visiteur chez Galaxy Swiss Bourdin</Text>
 
                         <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.phone} disabled></TextInput>
-                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.lastLogin} disabled></TextInput>
+                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.lastLogin}  disabled></TextInput>
                     </View>
                 </View>
             </>
@@ -95,11 +95,13 @@ export default class ProfileScreen extends React.Component {
 const styles = StyleSheet.create({
     title: {
         fontSize: 22,
-        fontWeight: 'bold'
+        fontFamily : "ProductSansBold"
     },
     subtitle: {
         fontSize: 12,
-        color: '#a3a3a3'
+        color: '#a3a3a3',
+        fontFamily : "ProductSansItalic"
+
     },
     card: {
         backgroundColor: 'transparent',
@@ -110,13 +112,6 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#222a5b'
-    },
-    confirmButton: {
-        backgroundColor: '#455eee',
-        width: '100%',
-        height: '100%',
-        borderRadius: 0
-
+        borderColor: '#222a5b',        
     }
 })

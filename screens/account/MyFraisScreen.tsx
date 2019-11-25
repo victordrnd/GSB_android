@@ -13,24 +13,25 @@ import NavigationService from '../../services/NavigationService';
 import FraisService from '../../services/FraisService';
 import Moment from 'react-moment';
 import ListFrais from '../../components/ListFrais';
+import { NavigationState, NavigationScreenProp } from 'react-navigation';
+
+interface NavigationParams {
+}
+
+type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
+
+interface Props {
+    navigation: Navigation;
+}
 
 
 
-
-export default class MyFraisScreen extends React.Component {
+export default class MyFraisScreen extends React.Component<Props> {
     constructor(props) {
         super(props);
     };
 
-    state = {
-        frais: []
-    }
 
-    componentDidMount() {
-        FraisService.getMyFrais((frais) => {
-            this.setState({ frais });
-        });
-    }
 
 
 
@@ -53,7 +54,6 @@ export default class MyFraisScreen extends React.Component {
             </>
         )
     }
-
 
 
 
@@ -97,11 +97,12 @@ export default class MyFraisScreen extends React.Component {
 const styles = StyleSheet.create({
     title: {
         fontSize: 22,
-        fontWeight: 'bold'
+        fontFamily: "ProductSansBold"
     },
     subtitle: {
         fontSize: 12,
-        color: '#a3a3a3'
+        color: '#a3a3a3',
+        fontFamily: "ProductSansItalic"
     },
     card: {
         backgroundColor: 'transparent',
@@ -124,11 +125,3 @@ const styles = StyleSheet.create({
 })
 
 
-const calendarStrings = {
-    lastDay: '[Hier à] HH:mm',
-    sameDay: "[Aujourd'hui à] HH:mm",
-    nextDay: '[Tomorrow à] LT',
-    lastWeek: '[last] dddd [à] LT',
-    nextWeek: 'dddd [à] LT',
-    sameElse: 'L'
-};

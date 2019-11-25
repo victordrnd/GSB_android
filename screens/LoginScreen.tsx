@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import UserService from '../services/UserService';
 interface NavigationParams {
-    my_param: string; // You can change "string" to what you are using
+    my_param: string; 
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -23,10 +23,14 @@ export class LoginScreen extends Component<Props> {
     }
 
     async submitForm() {
-        await UserService.login(this.state, async (res) => {
-            await UserService.setAuth(res);
-            this.props.navigation.navigate('Home');
-        });
+        if(this.state.email && this.state.password){
+            await UserService.login(this.state, async (res) => {
+                await UserService.setAuth(res);
+                this.props.navigation.navigate('Home');
+            });
+        }else{
+            alert('Certain champs ne sont pas remplis correctement.')
+        }
     }
 
 
@@ -51,21 +55,19 @@ export class LoginScreen extends Component<Props> {
 
                         <Card containerStyle={{ borderColor: 'transparent', elevation: 0, margin: -1, borderTopLeftRadius: 25, borderTopRightRadius: 25 }}>
                             <Text style={styles.title}>Connexion</Text>
-                            <Input label="Adresse email" keyboardType={'email-address'} inputStyle={styles.inputs} value={this.state.email} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            <Input label="Adresse email" keyboardType={'email-address'} inputStyle={styles.inputs} value={this.state.email} labelStyle={{ fontWeight: "normal", fontFamily : "ProductSansRegular" }} containerStyle={{ marginVertical: 10 }}
                                 onChangeText={email => this.setState({ email })}
                                 leftIcon={<Icon name='mail' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
-                            <Input label="Mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            <Input label="Mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password} labelStyle={{ fontWeight: "normal",fontFamily : "ProductSansRegular" }} containerStyle={{ marginVertical: 10 }}
                                 onChangeText={password => this.setState({ password })}
-                                leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
+                                leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>} blurOnSubmit={false} onSubmitEditing={() => this.submitForm()}></Input>
 
-                            <Text style={{ marginTop: 20, textAlign: "right",color: '#455eee' }}>Mot de passe oublié ?</Text>
+                            <Text style={{ marginTop: 20, textAlign: "right",color: '#455eee', fontFamily : "ProductSansRegular"}}>Mot de passe oublié ?</Text>
                         </Card>
                     </View>
                 </View>
-                <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
-                    <Button title="Connexion" buttonStyle={styles.confirmButton} onPress={() => this.submitForm()} />
-                </View>
+                <Button title="Connexion" buttonStyle={styles.confirmButton} titleStyle={{fontFamily : "ProductSansBold"}} onPress={() => this.submitForm()} />
             </>
         )
     }
@@ -82,8 +84,9 @@ const styles = StyleSheet.create({
     title: {
         color: '#000',
         fontSize: 28,
-        fontWeight: "bold",
-        margin: 20
+        margin: 20,
+        fontFamily : "ProductSansBold"
+
     },
     subtitle: {
         color: '#fff',
@@ -100,13 +103,18 @@ const styles = StyleSheet.create({
     switch1: {
         color: '#fff',
         fontSize: 20,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily : "ProductSansBold"
+
+
     },
     switch2: {
         color: '#fff',
         fontSize: 20,
         textAlign: "center",
-        opacity: 0.5
+        opacity: 0.5,
+        fontFamily : "ProductSansBold"
+
     },
     inputs: {
         marginVertical: 0,
@@ -116,8 +124,10 @@ const styles = StyleSheet.create({
     },
     confirmButton: {
         backgroundColor: '#455eee',
-        width: '100%',
-        height: '100%',
-        borderRadius: 0
+        width: '80%',
+        height: 45,
+        borderRadius: 30,
+        alignSelf: "center",
+        marginTop : 50
     }
 });

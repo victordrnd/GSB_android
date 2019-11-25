@@ -11,7 +11,7 @@ class FraisService {
     }
 
 
-    async getMyFrais(callback) : Promise<any> {
+    async getMyFrais(callback): Promise<any> {
         this.http.get(`${environment.apiUrl}/frais/my`)
             .then(res => {
                 callback(res.data.result)
@@ -21,23 +21,45 @@ class FraisService {
             })
     }
 
-    async create(obj, callback) : Promise<any>{
+    async create(obj, callback): Promise<any> {
         this.http.post(`${environment.apiUrl}/frais/create`, obj)
             .then(res => {
                 callback(res.data.result);
             })
             .catch(error => {
-                console.info(error.response.data)                
+                console.info(error.response.data)
             })
     }
 
-    async getMyFraisByDate(callback) : Promise<any>{
+    async getMyFraisByDate(callback): Promise<any> {
         this.http.get(`${environment.apiUrl}/frais/my/count`)
             .then(res => {
                 callback(res.data.result)
             })
-            .catch(error =>{
-                console.info(error.response)                
+            .catch(error => {
+                console.info(error.response.data)
+            });
+    }
+
+
+
+    async updateFrais(frais, callback) {
+        this.http.post(`${environment.apiUrl}/frais/my/update`, frais)
+            .then(res => {
+                callback(res.data.result)
+            })
+            .catch(error => {
+                console.info(error.response)
+            });
+    }
+
+    async deleteMyFrais(id, callback) {
+        this.http.get(`${environment.apiUrl}/frais/my/delete/${id}`)
+            .then(res => {
+                callback(res.data.result)
+            })
+            .catch(error => {
+                console.log(error.response.data)
             });
     }
 

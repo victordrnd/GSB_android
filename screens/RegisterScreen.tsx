@@ -4,7 +4,7 @@ import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import { RegisterForm } from '../components/Form/RegisterForm';
 
 interface NavigationParams {
-    my_param: string; // You can change "string" to what you are using
+    
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -31,7 +31,7 @@ export class RegisterScreen extends Component<Props> {
                         </View>
                     </View>
                 <View style={styles.RegistrationForm}>
-                    <RegisterForm></RegisterForm>
+                     <RegisterForm></RegisterForm>
                 </View>
             </ScrollView>
         )
@@ -50,13 +50,13 @@ const styles = StyleSheet.create({
     title: {
         color: '#000',
         fontSize: 28,
-        fontWeight: "bold",
-        margin: 20
+        margin: 20,
+        fontFamily : "ProductSansBold"
     },
     subtitle: {
         color: '#fff',
-        fontStyle: 'italic',
-        fontSize: 12
+        fontSize: 12,
+        fontFamily : "ProductSansItalic"
     },
     label: {
         marginLeft: 10,
@@ -68,13 +68,15 @@ const styles = StyleSheet.create({
     switch1: {
         color: '#fff',
         fontSize: 20,
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily : "ProductSansBold"
     },
     switch2: {
         color: '#fff',
         fontSize: 20,
         textAlign: "center",
-        opacity: 0.5
+        opacity: 0.5,
+        fontFamily : "ProductSansBold"
     },
     RegistrationForm:{
         height : ScreenHeight

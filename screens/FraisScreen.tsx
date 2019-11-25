@@ -28,12 +28,12 @@ const styles = StyleSheet.create({
     title: {
         color: '#fff',
         fontSize: 26,
-        fontWeight: 'bold'
+        fontFamily : "ProductSansBold"
     },
     subtitle: {
         color: '#fff',
-        fontStyle: 'italic',
-        fontSize: 12
+        fontSize: 12,
+        fontFamily : "ProductSansItalic"
     }
 });
 

@@ -5,7 +5,6 @@ import Menu from '../components/Menu';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 interface NavigationParams {
-    my_param: string; // You can change "string" to what you are using
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -23,12 +22,14 @@ const styles = StyleSheet.create({
     title: {
         color: '#fff',
         fontSize: 26,
-        fontWeight: 'bold'
+        fontFamily : "ProductSansBold"
+        //fontWeight: 'bold'
     },
     subtitle: {
         color: '#fff',
-        fontStyle: 'italic',
-        fontSize: 12
+        //fontStyle: 'italic',
+        fontSize: 12,
+        fontFamily : "ProductSansItalic"
     }
 });
 

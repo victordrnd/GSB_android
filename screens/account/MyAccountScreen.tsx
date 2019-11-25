@@ -33,7 +33,8 @@ const ListMenu = () =>
                             key={i}
                             title={l.name}
                             leftAvatar={<Icon name={l.icon} size={20} color="#adb8fa" />}
-                            titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                            titleStyle={{ color: 'black', fontFamily : "ProductSansBold" }}
+                            subtitleStyle={{fontFamily : "ProductSansItalic"}}
                             chevron={<Icon name="chevron-right" size={15} color="grey" />}
                             subtitle={l.subtitle}
                             style={{ marginVertical: 15 }}
@@ -111,11 +112,13 @@ export default class MyAccountScreen extends React.Component {
 const styles = StyleSheet.create({
     title: {
         fontSize: 22,
-        fontWeight: 'bold'
+        //fontWeight: 'bold',
+        fontFamily : "ProductSansBold"
     },
     subtitle: {
         fontSize: 12,
-        color: '#a3a3a3'
+        color: '#a3a3a3',
+        fontFamily : "ProductSansItalic"
     },
     card: {
         backgroundColor: 'transparent',
@@ -124,23 +127,6 @@ const styles = StyleSheet.create({
     }
 })
 
-// const commitsData = [
-//     { date: "2019-09-14", count: 1 },
-//     { date: "2019-09-22", count: 3 },
-//     { date: "2019-09-12", count: 2 },
-//     { date: "2019-09-02", count: 1 },
-//     { date: "2019-10-02", count: 1 },
-//     { date: "2019-10-03", count: 2 },
-//     { date: "2019-10-04", count: 3 },
-//     { date: "2019-10-05", count: 4 },
-//     { date: "2019-10-06", count: 5 },
-//     { date: "2019-10-30", count: 2 },
-//     { date: "2019-11-31", count: 3 },
-//     { date: "2019-11-01", count: 2 },
-//     { date: "2019-11-02", count: 4 },
-//     { date: "2019-11-05", count: 2 },
-//     { date: "2019-11-30", count: 4 }
-// ];
 
 const chartConfig =
 {

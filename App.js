@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { createStackNavigator } from 'react-navigation-stack';
-import { fadeOut, zoomIn } from 'react-navigation-transitions';
+import { fadeOut, zoomIn, fromRight, flipY, fromBottom } from 'react-navigation-transitions';
 import OfflineNotice from './components/OfflineNotice';
 import FraisDetailsScreen from './screens/account/FraisDetailsScreen';
 import MyAccountScreen from './screens/account/MyAccountScreen';
@@ -80,7 +80,7 @@ const AuthNavigator = createStackNavigator({
 },
 {
   headerMode : "none",
-  transitionConfig: (nav) => fadeOut()
+  transitionConfig: (nav) => flipY()
 })
 
 
@@ -96,6 +96,7 @@ const theme = {
     background: '#222a5b'
   },
 };
+
 
 
 
