@@ -106,6 +106,7 @@ export default class FraisDetailsScreen extends React.Component<Props> {
             console.log(frais);
             this.setState({frais});
             this.setState({ inputDisabled: true, showContainer: true });
+            this.props.navigation.state.params.onGoBack();
         });
     }
 
