@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import { RegisterForm } from '../components/Form/RegisterForm';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface NavigationParams {
-    
+
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -15,25 +16,33 @@ interface Props {
 
 export class RegisterScreen extends Component<Props> {
 
+    onSwipeRight = () => {
+        this.props.navigation.navigate('Login');
+    }
+
+
     render() {
         return (
-            <ScrollView>
-                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
-                <View style={styles.headerView} >
+            <GestureRecognizer onSwipeRight={this.onSwipeRight}>
+                <ScrollView>
+                    <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
+
+                    <View style={styles.headerView} >
                         <Image source={require('../assets/logo.png')} style={{ width: 80, height: 80, alignSelf: "center", marginTop: 20, paddingBottom: 20 }} />
                         <View>
                             <View style={{ width: "50%", position: "absolute", top: 15 }}>
-                                <Text style={styles.switch2} onPress={() => this.props.navigation.navigate('Login') }>Connexion</Text>
+                                <Text style={styles.switch2} onPress={() => this.props.navigation.navigate('Login')}>Connexion</Text>
                             </View>
                             <View style={{ width: "50%", position: "absolute", left: "50%", top: 15 }}>
                                 <Text style={styles.switch1}>Inscription</Text>
                             </View>
                         </View>
                     </View>
-                <View style={styles.RegistrationForm}>
-                     <RegisterForm></RegisterForm>
-                </View>
-            </ScrollView>
+                    <View style={styles.RegistrationForm}>
+                        <RegisterForm></RegisterForm>
+                    </View>
+                </ScrollView>
+            </GestureRecognizer>
         )
     }
 
@@ -51,12 +60,12 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 28,
         margin: 20,
-        fontFamily : "ProductSansBold"
+        fontFamily: "ProductSansBold"
     },
     subtitle: {
         color: '#fff',
         fontSize: 12,
-        fontFamily : "ProductSansItalic"
+        fontFamily: "ProductSansItalic"
     },
     label: {
         marginLeft: 10,
@@ -69,17 +78,17 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 20,
         textAlign: "center",
-        fontFamily : "ProductSansBold"
+        fontFamily: "ProductSansBold"
     },
     switch2: {
         color: '#fff',
         fontSize: 20,
         textAlign: "center",
         opacity: 0.5,
-        fontFamily : "ProductSansBold"
+        fontFamily: "ProductSansBold"
     },
-    RegistrationForm:{
-        height : ScreenHeight
+    RegistrationForm: {
+        height: ScreenHeight
     }
 });
 

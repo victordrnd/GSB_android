@@ -1,11 +1,12 @@
 import React from 'react';
 // import LinearGradient from 'react-native-linear-gradient';
-import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StatusBar, StyleSheet, Text, View, Alert } from 'react-native';
 import { ContributionGraph } from "react-native-chart-kit";
 import { ListItem } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import FraisService from '../../services/FraisService';
 import NavigationService from '../../services/NavigationService';
+import UserService from '../../services/UserService';
 
 
 const list = [
@@ -48,7 +49,7 @@ const ListMenu = () =>
 
 
 export default class MyAccountScreen extends React.Component {
-    static navigationOptions = ({ navigation, navigationOptions }) => {
+     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
         return {
             headerStyle: {
@@ -67,14 +68,33 @@ export default class MyAccountScreen extends React.Component {
                     }} />
                 </View>
             ),
-            headerRight: <Icon name="user" size={20} color="white" style={{ elevation: 1, padding: 20 }} />
+            headerRight: <Icon name="power-off" size={20} color="#475ee9" style={{ elevation: 1, padding: 20 }} onPress={() => {
+                Alert.alert(
+                    'Déconnexion',
+                    'Etes vous sûr de vouloir vous déconnecter ?',
+                    [
+                        {
+                            text: 'Annuler',
+                            onPress: () => { },
+                            style: 'cancel',
+                        },
+                        {
+                            text: 'OK', onPress: () => {UserService.purgeAuth(); NavigationService.navigate('Login', {})}
+                        },
+                    ],
+                    { cancelable: false },
+                );
+            }}/>
         };
     };
+
+
 
 
     state = {
         commitsData : []
     }
+
 
     componentDidMount(){
         FraisService.getMyFraisByDate((data) => {
@@ -89,13 +109,6 @@ export default class MyAccountScreen extends React.Component {
                 <View style={{ marginHorizontal: 15 }}>
                     <Text style={styles.title}>Mon Compte & Activité</Text>
                     <Text style={styles.subtitle}>Accédez à vos déclarations de frais</Text>
-
-                    {/* <LinearGradient style={{ marginTop: 40, height: 150, borderRadius: 8 }} colors={['#3e5be6', '#1f2650']} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
-
-                    </LinearGradient> */}
-                    {/* <Text style={{ color: 'white', padding: 20, fontWeight: '500' }}>Résumé de votre activité :</Text>
-                        <Text style={{ fontSize: 34, color: 'white', textAlign: 'center' }}>50€ <Text style={{ fontSize: 17 }}>EUR</Text></Text>
-                        <Text style={{textAlign : 'center', color : '#fff'}}>En attente</Text> */}
                     <View style={{marginTop : 40}}>
                         <ContributionGraph values={this.state.commitsData} endDate={new Date()}
                             numDays={105} width={Dimensions.get('window').width - 30} height={220} chartConfig={chartConfig} />
@@ -107,6 +120,10 @@ export default class MyAccountScreen extends React.Component {
             </>
         )
     }
+
+
+
+    
 }
 
 const styles = StyleSheet.create({

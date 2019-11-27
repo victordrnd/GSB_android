@@ -82,8 +82,8 @@ export default class FraisDetailsScreen extends React.Component<Props> {
                     style: 'cancel',
                 },
                 {
-                    text: 'OK', onPress: () => FraisService.deleteMyFrais(this.frais.id, () => {
-                        this.props.navigation.state.params.onGoBack();
+                    text: 'OK', onPress: () => FraisService.deleteMyFrais(this.frais.id, async () => {
+                        await this.props.navigation.state.params.onGoBack();
                         this.props.navigation.goBack();
                     })
                 },
@@ -103,7 +103,6 @@ export default class FraisDetailsScreen extends React.Component<Props> {
             description : this.state.description
         }
         FraisService.updateFrais(obj, (frais) => {
-            console.log(frais);
             this.setState({frais});
             this.setState({ inputDisabled: true, showContainer: true });
             this.props.navigation.state.params.onGoBack();

@@ -11,6 +11,8 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
+import UserService from '../../services/UserService';
+import Moment from 'react-moment';
 
 
 
@@ -19,6 +21,73 @@ export default class ProfileScreen extends React.Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
     }
+
+
+    state = {
+        isDisplayed: true,
+        user: {
+            firstname : '',
+            lastname: '',
+            phone : '',
+            lastLogin : ''
+        }
+    }
+
+    async componentDidMount() {
+        await this.getCurrentUser();
+    }
+
+
+    getCurrentUser = async () => {
+        await UserService.currentUser.subscribe(user => {
+            this.setState({ user });
+        });
+    }
+
+    handleChange = () => {
+        this.setState({ isDisplayed: !this.state.isDisplayed });
+    }
+
+
+
+
+
+
+    render() {
+
+        return (
+            <>
+                <StatusBar backgroundColor='#fff' barStyle="dark-content"></StatusBar>
+                <View style={{ marginHorizontal: 15 }}>
+                    <Text style={styles.title}>Mon Profil</Text>
+                    <Text style={styles.subtitle}>Détails de votre compte</Text>
+
+                    <View style={{ marginTop: 15 }}>
+                        <TouchableOpacity onPress={this.handleChange}>
+
+                            {this.state.isDisplayed ?
+
+                                <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
+                                :
+                                <View style={{ alignSelf: 'center', height: 150 }}>
+                                    <QRCode size={150} color="#455eee" value="https://victordurand.fr" ></QRCode>
+                                </View>
+                            }
+                        </TouchableOpacity>
+                        <Text h4 style={{ textAlign: 'center' }}>{this.state.user.firstname} {this.state.user.lastname}</Text>
+                        <Text style={{ textAlign: 'center', color: 'grey', fontFamily: "ProductSansItalic" }}>Visiteur chez Galaxy Swiss Bourdin</Text>
+
+                        <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : ""} disabled></TextInput>
+                        <Text style={{ fontFamily: "ProductSansRegular",marginTop: -40, marginLeft : 22 }}>{this.state.user.phone ? this.state.user.phone : "Non renseigné"}</Text>
+                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : "" } disabled></TextInput>
+                        <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular",marginTop: -40, marginLeft : 22 }} element={Text}>{this.state.user.lastLogin}</Moment>
+                    </View>
+                </View>
+            </>
+        )
+    }
+
+
     static navigationOptions = ({ navigation, navigationOptions }) => {
         const { params } = navigation.state;
 
@@ -45,62 +114,17 @@ export default class ProfileScreen extends React.Component {
 
         };
     };
-    
-    state = {
-        phone: "06 11 28 62 86",
-        lastLogin : '2019-11-16 17:34',
-        isDisplayed: true
-    }
-
-
-    handleChange = () => {
-        this.setState({ isDisplayed: !this.state.isDisplayed });
-    }
-
-
-
-    render() {
-
-        return (
-            <>
-                <StatusBar backgroundColor='#fff' barStyle="dark-content"></StatusBar>
-                <View style={{ marginHorizontal: 15 }}>
-                    <Text style={styles.title}>Mon Profil</Text>
-                    <Text style={styles.subtitle}>Détails de votre compte</Text>
-
-                    <View style={{ marginTop: 15 }}>
-                        <TouchableOpacity onPress={this.handleChange}>
-
-                            {this.state.isDisplayed ?
-
-                                <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
-                                :
-                                <View style={{ alignSelf: 'center',height:150 }}>
-                                    <QRCode size={150} color="#455eee" value="https://victordurand.fr" ></QRCode>
-                                </View>
-                            }
-                        </TouchableOpacity>
-                        <Text h4 style={{ textAlign: 'center' }}>Victor Durand</Text>
-                        <Text style={{ textAlign: 'center', color: 'grey', fontFamily:"ProductSansItalic" }}>Visiteur chez Galaxy Swiss Bourdin</Text>
-
-                        <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.phone} disabled></TextInput>
-                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.lastLogin}  disabled></TextInput>
-                    </View>
-                </View>
-            </>
-        )
-    }
 }
 
 const styles = StyleSheet.create({
     title: {
         fontSize: 22,
-        fontFamily : "ProductSansBold"
+        fontFamily: "ProductSansBold"
     },
     subtitle: {
         fontSize: 12,
         color: '#a3a3a3',
-        fontFamily : "ProductSansItalic"
+        fontFamily: "ProductSansItalic"
 
     },
     card: {
@@ -110,8 +134,16 @@ const styles = StyleSheet.create({
     },
     inputs: {
         marginVertical: 10,
+        paddingTop: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#222a5b',        
+        borderColor: '#222a5b',
     }
-})
+});
+
+const calendarStrings = {
+    lastDay: '[Hier à] HH:mm',
+    sameDay: "[Aujourd'hui à] HH:mm",
+    lastWeek: '[Last] dddd [at] LT',
+    sameElse: 'L'
+};

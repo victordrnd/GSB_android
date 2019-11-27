@@ -66,10 +66,10 @@ export default class ListFrais extends React.Component {
         refreshing: false
     }
 
-    componentDidMount() {
-        this.getMyFrais();
-
+    async componentDidMount() {
+        await this.getMyFrais();
     }
+    
 
     async getMyFrais() {
         FraisService.getMyFrais(async (frais) => {
@@ -115,8 +115,8 @@ export default class ListFrais extends React.Component {
                                     right={() => <Text style={{ fontFamily: "ProductSansRegular", marginTop: 5 }}>+ {l.montant} EUR</Text>}
                                     onPress={() => NavigationService.navigate('FraisDetails', {
                                         frais: l, onGoBack: async () => {
-                                            FraisService.getMyFrais(async (frais) => {
-                                                await this.setState({ frais });
+                                            await FraisService.getMyFrais((frais) => {
+                                                this.setState({ frais });
                                             });
                                         }
                                     })}
@@ -132,9 +132,7 @@ export default class ListFrais extends React.Component {
 const calendarStrings = {
     lastDay: '[Hier à] HH:mm',
     sameDay: "[Aujourd'hui à] HH:mm",
-    nextDay: '[Tomorrow à] LT',
-    lastWeek: '[last] dddd [à] LT',
-    nextWeek: 'dddd [à] LT',
+    lastWeek: '[Last] dddd [at] LT',
     sameElse: 'L'
 };
 

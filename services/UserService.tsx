@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import Service from './Service';
+import NavigationService from './NavigationService';
 
 class UserService {
 
@@ -32,6 +33,8 @@ class UserService {
                     .get(`${environment.apiUrl}/auth/current`).then(res => {
                         this.setAuth(res.data.result);
                         this.isAuthenticatedSubject.next(true);
+                        res.data.result.user.lastLogin = new Date();
+                        this.currentUserSubject.next(res.data.result.user);
                     });
             } catch (error) {
                 this.purgeAuth();
@@ -80,7 +83,7 @@ class UserService {
     }
 
     async destroyToken() {
-        AsyncStorage.setItem('@token', null);
+        AsyncStorage.removeItem('@token')
     }
 
 

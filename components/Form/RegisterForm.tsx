@@ -67,7 +67,7 @@ export class RegisterForm extends ValidationComponent {
                             leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
                         <Input ref={(password2) => this.password2Input = password2} label="Répétez votre mot de passe" secureTextEntry={true} style={styles.inputs} value={this.state.password2} labelStyle={{ fontWeight: "normal", fontFamily : "ProductSansRegular" }} containerStyle={{ marginVertical: 10 }}
-                            onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false} onSubmitEditing={() => { this.submitForm; }}
+                            onChangeText={password2 => this.setState({ password2 })} blurOnSubmit={false} onSubmitEditing={() => { this.submitForm(); }}
                             leftIcon={<Icon name='lock' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
 
                     </Card>
