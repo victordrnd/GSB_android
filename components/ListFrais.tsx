@@ -4,14 +4,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     ScrollView,
-    RefreshControl
+    RefreshControl,
+    FlatList
 } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import FraisService from '../services/FraisService';
 import { List, ActivityIndicator } from 'react-native-paper';
 import Moment from 'react-moment';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
-
+import Loader from './Loader';
 
 
 
@@ -57,19 +57,15 @@ const RefusedIcon = () => (
 export default class ListFrais extends React.Component {
     count: any;
 
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         frais: [],
         refreshing: false
     }
 
-    async componentDidMount() {
-        await this.getMyFrais();
+    componentDidMount() {
+        this.getMyFrais();
     }
-    
+
 
     async getMyFrais() {
         FraisService.getMyFrais(async (frais) => {
@@ -89,7 +85,7 @@ export default class ListFrais extends React.Component {
                     onRefresh={this.getMyFrais.bind(this)}
                 />
             }>
-                {loading ? <ActivityIndicator color="#475ee9" size={50}></ActivityIndicator> : <this.ListMenu list={this.state.frais}></this.ListMenu>}
+                {loading ? <Loader loading={loading} /> : <this.ListMenu list={this.state.frais}></this.ListMenu>}
             </ScrollView>
 
         )
@@ -97,35 +93,44 @@ export default class ListFrais extends React.Component {
 
     ListMenu = (props) =>
         (
-            <ScrollView >
-                <View>
-                    {
-                        props.list.map((l, i) => (
-                            <View key={i}>
+            <View>
+                {
+                    <FlatList
+                        data={props.list}
+                        renderItem={({ item, index }) => (
+                            <View>
                                 {
-                                    checkDate(l.created_at, i) &&
-                                    <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansBold" }} element={Text}>{l.created_at}</Moment>
+                                    checkDate(item.created_at, index) &&
+                                    <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansBold" }} element={Text}>{item.created_at}</Moment>
                                 }
                                 <List.Item
-                                    title={`Frais de ${l.type.libelle}`}
-                                    description={`${l.status.libelle} - ${l.description}`}
+                                    title={`Frais de ${item.type.libelle}`}
+                                    description={`${item.status.libelle} - ${item.description}`}
                                     titleStyle={{ fontFamily: "ProductSansRegular" }}
                                     descriptionStyle={{ fontFamily: "ProductSansItalic" }}
-                                    left={() => <LeftIcon type={l.status.libelle} />}
-                                    right={() => <Text style={{ fontFamily: "ProductSansRegular", marginTop: 5 }}>+ {l.montant} EUR</Text>}
+                                    left={() => <LeftIcon type={item.status.libelle} />}
+                                    right={() => <Text style={{ fontFamily: "ProductSansRegular", marginTop: 5 }}>+ {item.montant} EUR</Text>}
                                     onPress={() => NavigationService.navigate('FraisDetails', {
-                                        frais: l, onGoBack: async () => {
-                                            await FraisService.getMyFrais((frais) => {
-                                                this.setState({ frais });
-                                            });
+                                        frais: item,
+                                        index: index,
+                                        onUpdate: async (el, i) => {
+                                            let frais = this.state.frais;
+                                            frais[i] = el;
+                                            await this.setState({ frais: frais });
+                                        },
+                                        onDelete: async (i) => {
+                                            this.state.frais.splice(i,1);
+                                            this.setState({frais : this.state.frais});
                                         }
                                     })}
                                 />
+
                             </View>
-                        ))
-                    }
-                </View>
-            </ScrollView>
+                        )}
+                        keyExtractor={(item: any) => item.id}
+                    />
+                }
+            </View>
         )
 }
 

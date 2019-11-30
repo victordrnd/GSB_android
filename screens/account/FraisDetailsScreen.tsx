@@ -1,15 +1,17 @@
 import React from 'react';
-import { Image, StatusBar, StyleSheet, View, Alert } from 'react-native';
+import { Image, StatusBar, StyleSheet, View, Alert, TouchableOpacity } from 'react-native';
 import { Button, Text, Badge } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import { TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Feather';
-import { NavigationScreenProp, NavigationState } from 'react-navigation';
+import { NavigationScreenProp, NavigationState, ScrollView } from 'react-navigation';
 import FraisService from '../../services/FraisService';
-
+import environment from '../../environments/environment';
+import ImageView from 'react-native-image-view';
 
 interface NavigationParams {
-    frais: string;
+    frais: any;
+    index: number
 }
 
 type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
@@ -20,9 +22,11 @@ interface Props {
 
 export default class FraisDetailsScreen extends React.Component<Props> {
     frais: any;
+    index: number;
     constructor(props) {
         super(props);
         this.frais = this.props.navigation.getParam('frais');
+        this.index = this.props.navigation.getParam('index');
     }
 
     state = {
@@ -31,7 +35,8 @@ export default class FraisDetailsScreen extends React.Component<Props> {
         showContainer: true,
         frais: undefined,
         montant: 0,
-        description: ''
+        description: '',
+        isImageViewVisible: false
     }
 
     componentDidMount() {
@@ -71,7 +76,7 @@ export default class FraisDetailsScreen extends React.Component<Props> {
         };
     };
 
-    onDelete = () => {
+    onDelete = (i) => {
         Alert.alert(
             'Confirmez la suppression',
             'Etes vous sûr de vouloir supprimer cette demande de frais ?',
@@ -83,7 +88,7 @@ export default class FraisDetailsScreen extends React.Component<Props> {
                 },
                 {
                     text: 'OK', onPress: () => FraisService.deleteMyFrais(this.frais.id, async () => {
-                        await this.props.navigation.state.params.onGoBack();
+                        this.props.navigation.state.params.onDelete(i);
                         this.props.navigation.goBack();
                     })
                 },
@@ -99,13 +104,13 @@ export default class FraisDetailsScreen extends React.Component<Props> {
     onSubmit = () => {
         let obj = {
             ...this.frais,
-            montant : this.state.montant,
-            description : this.state.description
+            montant: this.state.montant,
+            description: this.state.description
         }
         FraisService.updateFrais(obj, (frais) => {
-            this.setState({frais});
+            this.setState({ frais });
             this.setState({ inputDisabled: true, showContainer: true });
-            this.props.navigation.state.params.onGoBack();
+            this.props.navigation.state.params.onUpdate(frais, this.index);
         });
     }
 
@@ -134,6 +139,20 @@ export default class FraisDetailsScreen extends React.Component<Props> {
                         <TextInput label="Description" style={styles.inputs} value={this.state.description} disabled={this.state.inputDisabled}
                             onChangeText={description => this.setState({ description })} />
                         <TextInput label="Date de déclaration" style={styles.inputs} value={this.frais.created_at} disabled />
+                        {
+                            this.state.showContainer &&
+                            <TouchableOpacity onPress={() => this.setState({ isImageViewVisible: true })}>
+
+                                <Image source={{ uri: `${environment.photoUrl}/${this.frais.photo_url}` }} style={{ width: "100%", height: 200 }}></Image>
+                            </TouchableOpacity>
+                        }
+                        <ImageView
+                            images={[{ source: { uri: `${environment.photoUrl}/${this.frais.photo_url}` } }]}
+                            imageIndex={0}
+                            isVisible={this.state.isImageViewVisible}
+                            onClose={() => this.setState({ isImageViewVisible: false })}
+                            isPinchZoomEnabled={false}
+                        />
                     </View>
 
 
@@ -152,7 +171,7 @@ export default class FraisDetailsScreen extends React.Component<Props> {
                 }
                 {this.state.showContainer &&
                     <View style={styles.rightContainer}>
-                        <Button title="Supprimer" buttonStyle={styles.deleteButton} disabled={this.state.buttonDisabled} icon={<Icon name="trash" color="white" size={16} style={{ marginLeft: 8 }} />} iconRight onPress={() => this.onDelete()} />
+                        <Button title="Supprimer" buttonStyle={styles.deleteButton} disabled={this.state.buttonDisabled} icon={<Icon name="trash" color="white" size={16} style={{ marginLeft: 8 }} />} iconRight onPress={() => this.onDelete(this.index)} />
                     </View>
                 }
             </>

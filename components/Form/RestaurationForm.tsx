@@ -3,49 +3,81 @@ import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
     StyleSheet,
-    ScrollView,
-    Image
+    Image,
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import { Button, Card, Input } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker'
-
+import FraisService from '../../services/FraisService';
+import NavigationService from '../../services/NavigationService';
+import Loader from '../Loader';
 
 
 export default class RestaurationForm extends React.PureComponent {
 
     state = {
         montant: '',
-        nom: '',
-        photo: null
+        description: '',
+        photo: "",
+        photo_url: null,
+        loading: false
     }
 
+    validate() {
+        let { montant, photo, description } = this.state;
+        if (this.state.montant != '' && photo != "" && description != '') {
+            return true;
+        }
+        return false;
+    }
 
     handleChoosePhoto = () => {
         const options = {
-            noData: true,
+            noData: false,
+            quality: 0.5
         }
-        ImagePicker.launchImageLibrary(options, response => {
+        ImagePicker.launchCamera(options, response => {
             if (response.uri) {
-                this.setState({ photo: response })
+                this.setState({ photo_url: response, photo: response.data });
+
             }
         })
     }
 
+    async saveFrais() {
+        if (this.validate()) {
+            this.setState({ loading: true });
+            let obj = {
+                montant: this.state.montant,
+                description: this.state.description,
+                photo: this.state.photo,
+                type_id: 1
+            };
+            await FraisService.create(obj, () => {
+                this.setState({ loading: false });
+                NavigationService.navigate('MyFrais', {});
+            })
+        }else{
+            alert('Certains champs sont manquants ou incorrectement remplis');
+        }
+
+    }
+
     render() {
-        const { photo } = this.state
+        const photo = this.state.photo_url
         return (
             <>
                 <View>
+                    <Loader
+                        loading={this.state.loading} />
                     <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
 
                         <Input label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.montant} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
                             onChangeText={montant => this.setState({ montant })}
-                            leftIcon={<Icon name='credit-card' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
+                            leftIcon={<Icon name='credit-card' size={24} color='grey' style={{ marginLeft: -15 }} />}></Input>
 
-                        <Input label="Nom de l'établissement" keyboardType={'default'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.nom} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
-                            onChangeText={nom => this.setState({ nom })}
-                            leftIcon={<Icon name='hash' size={24} color='grey' style={{marginLeft : -15}}/>}></Input>
+                        <Input label="Nom de l'établissement" keyboardType={'default'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.description} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={description => this.setState({ description })}
+                            leftIcon={<Icon name='hash' size={24} color='grey' style={{ marginLeft: -15 }} />}></Input>
 
                     </Card>
                     <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
@@ -54,7 +86,7 @@ export default class RestaurationForm extends React.PureComponent {
                             {photo && (
                                 <Image
                                     source={{ uri: photo.uri }}
-                                    style={{ width: '100%', height: 200, alignSelf: 'center', justifyContent: 'center' }}
+                                    style={{ width: "100%", height: photo.height, alignSelf: 'center', justifyContent: 'center' }}
                                 />
                             )}
                         </View>
@@ -66,7 +98,7 @@ export default class RestaurationForm extends React.PureComponent {
                 </View>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
-                    <Button title="Envoyer" buttonStyle={styles.confirmButton} />
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.saveFrais()} />
                 </View>
             </>
         )

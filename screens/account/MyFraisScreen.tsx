@@ -7,11 +7,8 @@ import {
     Image,
     StatusBar,
     StyleSheet,
-    ActivityIndicator
+    ScrollView
 } from 'react-native';
-import NavigationService from '../../services/NavigationService';
-import FraisService from '../../services/FraisService';
-import Moment from 'react-moment';
 import ListFrais from '../../components/ListFrais';
 import { NavigationState, NavigationScreenProp } from 'react-navigation';
 
@@ -32,10 +29,6 @@ export default class MyFraisScreen extends React.Component<Props> {
     };
 
 
-
-
-
-
     render() {
 
         return (
@@ -45,11 +38,11 @@ export default class MyFraisScreen extends React.Component<Props> {
                     <Text style={styles.title}>Mes fiches de frais</Text>
                     <Text style={styles.subtitle}>Historique de vos déclaration</Text>
 
-                    <View style={{ marginTop: 15 }}>
+                    <ScrollView style={{ marginTop: 15 , marginBottom : 30}}>
                         <List.Section>
                             <ListFrais></ListFrais>
                         </List.Section>
-                    </View>
+                    </ScrollView>
                 </View>
             </>
         )

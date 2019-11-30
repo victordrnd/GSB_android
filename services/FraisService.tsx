@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import environment from '../environments/environment';
 import Service from './Service';
+import { BehaviorSubject } from 'rxjs';
 
 
 class FraisService {
@@ -11,9 +12,14 @@ class FraisService {
     }
 
 
+    public listFraisSubject = new BehaviorSubject<any>(false);
+    public listFrais = this.listFraisSubject.asObservable();
+    
+
     async getMyFrais(callback): Promise<any> {
         this.http.get(`${environment.apiUrl}/frais/my`)
             .then(res => {
+                this.listFraisSubject.next(res.data.result);
                 callback(res.data.result)
             })
             .catch(error => {
