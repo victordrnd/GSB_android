@@ -49,13 +49,13 @@ class UserService {
         }
     }
 
-    async login(obj, callback) {
+    async login(obj, callback, errorCallback) {
         this.http.post(`${environment.apiUrl}/auth/login`, obj)
             .then((res) => {
                 callback(res.data.result);
             })
             .catch((error) => {
-                console.info(error)
+                errorCallback(error);
             })
     }
 

@@ -26,10 +26,10 @@ export default class ProfileScreen extends React.Component {
     state = {
         isDisplayed: true,
         user: {
-            firstname : '',
+            firstname: '',
             lastname: '',
-            phone : '',
-            lastLogin : ''
+            phone: '',
+            lastLogin: ''
         }
     }
 
@@ -50,7 +50,10 @@ export default class ProfileScreen extends React.Component {
 
 
 
-
+    _GenerateQRValue = () :string =>{
+        const {user} = this.state;
+        return `MECARD:N:${user.lastname},${user.firstname};ADR:58 Rue Pierre Dupont 69004 Croix Rousse ;Note: Visiteur chez GSB;TEL:0611286286;EMAIL:${user.lastname}@gsb.com;;`;
+    } 
 
 
     render() {
@@ -70,7 +73,7 @@ export default class ProfileScreen extends React.Component {
                                 <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
                                 :
                                 <View style={{ alignSelf: 'center', height: 150 }}>
-                                    <QRCode size={150} color="#455eee" value="https://victordurand.fr" ></QRCode>
+                                    <QRCode size={150} color="#455eee" value={this._GenerateQRValue()} ></QRCode>
                                 </View>
                             }
                         </TouchableOpacity>
@@ -78,9 +81,9 @@ export default class ProfileScreen extends React.Component {
                         <Text style={{ textAlign: 'center', color: 'grey', fontFamily: "ProductSansItalic" }}>Visiteur chez Galaxy Swiss Bourdin</Text>
 
                         <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : ""} disabled></TextInput>
-                        <Text style={{ fontFamily: "ProductSansRegular",marginTop: -40, marginLeft : 22 }}>{this.state.user.phone ? this.state.user.phone : "Non renseigné"}</Text>
-                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : "" } disabled></TextInput>
-                        <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular",marginTop: -40, marginLeft : 22 }} element={Text}>{this.state.user.lastLogin}</Moment>
+                        <Text style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }}>{this.state.user.phone ? this.state.user.phone : "Non renseigné"}</Text>
+                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : ""} disabled></TextInput>
+                        <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }} element={Text}>{this.state.user.lastLogin}</Moment>
                     </View>
                 </View>
             </>

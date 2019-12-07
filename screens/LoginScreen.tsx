@@ -28,6 +28,9 @@ export class LoginScreen extends Component<Props> {
             await UserService.login(this.state, async (res) => {
                 await UserService.setAuth(res);
                 this.props.navigation.navigate('Home');
+            },
+            (error) => {
+                alert('Identifiants incorrects')
             });
         } else {
             alert('Certain champs ne sont pas remplis correctement.')

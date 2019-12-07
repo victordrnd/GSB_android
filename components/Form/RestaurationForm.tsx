@@ -4,13 +4,15 @@ import {
     View,
     StyleSheet,
     Image,
+    TouchableOpacity,
 } from 'react-native';
 import { Button, Card, Input } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker'
 import FraisService from '../../services/FraisService';
 import NavigationService from '../../services/NavigationService';
 import Loader from '../Loader';
-
+import environment from '../../environments/environment';
+import ImageView from 'react-native-image-view';
 
 export default class RestaurationForm extends React.PureComponent {
 
@@ -19,7 +21,8 @@ export default class RestaurationForm extends React.PureComponent {
         description: '',
         photo: "",
         photo_url: null,
-        loading: false
+        loading: false,
+        isImageViewVisible: false
     }
 
     validate() {
@@ -56,7 +59,7 @@ export default class RestaurationForm extends React.PureComponent {
                 this.setState({ loading: false });
                 NavigationService.navigate('MyFrais', {});
             })
-        }else{
+        } else {
             alert('Certains champs sont manquants ou incorrectement remplis');
         }
 
@@ -84,10 +87,18 @@ export default class RestaurationForm extends React.PureComponent {
 
                         <View>
                             {photo && (
-                                <Image
-                                    source={{ uri: photo.uri }}
-                                    style={{ width: "100%", height: photo.height, alignSelf: 'center', justifyContent: 'center' }}
-                                />
+                                <>
+                                    <TouchableOpacity onPress={() => this.setState({ isImageViewVisible: true })}>
+                                        <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }}></Image>
+                                    </TouchableOpacity>
+                                    <ImageView
+                                        images={[{ source: { uri: photo.uri } }]}
+                                        imageIndex={0}
+                                        isVisible={this.state.isImageViewVisible}
+                                        onClose={() => this.setState({ isImageViewVisible: false })}
+                                        isPinchZoomEnabled={false}
+                                    />
+                                </>
                             )}
                         </View>
                         <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
