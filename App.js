@@ -21,6 +21,7 @@ import { RegisterScreen } from './screens/RegisterScreen';
 import NavigationService from './services/NavigationService';
 import Service from './services/Service';
 import UserService from './services/UserService';
+import DocumentScan from './components/DocumentScan';
 
 //TODO delete
 // AsyncStorage.clear();
@@ -29,8 +30,8 @@ export default class App extends React.Component {
     await AsyncStorage.getItem('@token').then( async (token) => {
       UserService.tokenSubject.next(token);
       Service.token = token;
+      await UserService.populate();
     });
-    await UserService.populate();
   }
 
   render() {
@@ -53,7 +54,8 @@ const MainNavigator = createStackNavigator({
   Account: { screen: MyAccountScreen },
   Profile: { screen: ProfileScreen },
   MyFrais: { screen: MyFraisScreen },
-  FraisDetails: { screen: FraisDetailsScreen }
+  FraisDetails: { screen: FraisDetailsScreen },
+  Scanner : {screen: DocumentScan}
 },
   {
     initialRouteName: 'Home',

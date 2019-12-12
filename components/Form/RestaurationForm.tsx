@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Image,
     TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import { Button, Card, Input } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker'
@@ -19,29 +20,36 @@ export default class RestaurationForm extends React.PureComponent {
     state = {
         montant: '',
         description: '',
-        photo: "",
         photo_url: null,
         loading: false,
         isImageViewVisible: false
     }
 
     validate() {
-        let { montant, photo, description } = this.state;
-        if (this.state.montant != '' && photo != "" && description != '') {
+        let { montant, photo_url, description } = this.state;
+        if (this.state.montant != '' && photo_url != null && description != '') {
             return true;
         }
         return false;
     }
 
     handleChoosePhoto = () => {
-        const options = {
-            noData: false,
-            quality: 0.5
-        }
-        ImagePicker.launchCamera(options, response => {
-            if (response.uri) {
-                this.setState({ photo_url: response, photo: response.data });
+        // const options = {
+        //     noData: false,
+        //     quality: 0.5
+        // }
 
+
+        // ImagePicker.launchCamera(options, response => {
+        //     if (response.uri) {
+        //         this.setState({ photo_url: response, photo: response.data });
+
+        //     }
+        // })
+
+        NavigationService.navigate('Scanner', {
+            onScanned : (photo) => {
+                this.setState({photo_url : photo });
             }
         })
     }
@@ -52,7 +60,7 @@ export default class RestaurationForm extends React.PureComponent {
             let obj = {
                 montant: this.state.montant,
                 description: this.state.description,
-                photo: this.state.photo,
+                photo: this.state.photo_url.uri,
                 type_id: 1
             };
             await FraisService.create(obj, () => {
@@ -69,7 +77,7 @@ export default class RestaurationForm extends React.PureComponent {
         const photo = this.state.photo_url
         return (
             <>
-                <View>
+                <ScrollView>
                     <Loader
                         loading={this.state.loading} />
                     <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
@@ -89,10 +97,10 @@ export default class RestaurationForm extends React.PureComponent {
                             {photo && (
                                 <>
                                     <TouchableOpacity onPress={() => this.setState({ isImageViewVisible: true })}>
-                                        <Image source={{ uri: photo.uri }} style={{ width: "100%", height: 200 }}></Image>
+                                        <Image source={{ uri: photo.data.croppedImage }} style={{ width: "100%", height: 200 }}></Image>
                                     </TouchableOpacity>
                                     <ImageView
-                                        images={[{ source: { uri: photo.uri } }]}
+                                        images={[{ source: {uri : photo.data.croppedImage } }]}
                                         imageIndex={0}
                                         isVisible={this.state.isImageViewVisible}
                                         onClose={() => this.setState({ isImageViewVisible: false })}
@@ -106,7 +114,7 @@ export default class RestaurationForm extends React.PureComponent {
 
 
 
-                </View>
+                </ScrollView>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
                     <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.saveFrais()} />

@@ -27,6 +27,7 @@ class UserService {
     token :string;
 
     async populate() {
+        console.log(this.tokenObservable);
         if (await this.tokenObservable.subscribe(token => this.token = token)) {
             try {
                 await this.http
@@ -38,13 +39,14 @@ class UserService {
                     });
             } catch (error) {
                 this.purgeAuth();
+                console.log(error)
                 this.isAuthenticatedSubject.next(false);
                 return false;
             }
             return true;
         } else {
             // Remove any potential remnants of previous auth states
-            this.purgeAuth();
+            //this.purgeAuth();
             return false;
         }
     }
