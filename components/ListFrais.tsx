@@ -1,16 +1,13 @@
-import { ListItem, Text } from 'react-native-elements';
-import React, { Component } from 'react';
+import { Text } from 'react-native-elements';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
-    ScrollView,
-    RefreshControl,
     FlatList
 } from 'react-native';
 import NavigationService from '../services/NavigationService';
 import FraisService from '../services/FraisService';
-import { List, ActivityIndicator } from 'react-native-paper';
-import Moment from 'react-moment';
+import { List } from 'react-native-paper';
 import Loader from './Loader';
 
 
@@ -23,23 +20,19 @@ const LeftIcon = (props) => {
             return (
                 <WaitingIcon></WaitingIcon>
             )
-            break;
         case "Validé":
             return (
                 <ValidatedIcon></ValidatedIcon>
             )
-            break;
         case "Refusé":
             return (
                 <RefusedIcon></RefusedIcon>
             )
-            break;
     }
 }
 
 const WaitingIcon = () => (
-    <View style={{ backgroundColor: "transparent", borderRadius: 100, width: 25, height: 25 }}>
-        <Icon name="refresh-cw" size={25} color="#fbc02d" style={{ marginTop: 12 }} />
+    <View style={{ backgroundColor: "#fbc02d", borderRadius: 100, width: 10, height: 10, marginVertical : 15 }}>
     </View>
 )
 
@@ -56,9 +49,6 @@ const RefusedIcon = () => (
 )
 
 export default class ListFrais extends React.Component {
-    count: any;
-
-    
     state = {
         frais: [],
         refreshing: false,
@@ -81,18 +71,11 @@ export default class ListFrais extends React.Component {
         let { loading } = this.state
         return (
 
-            <ScrollView style={{ minHeight: 200 }} refreshControl={
-                <RefreshControl
-                    //refresh control used for the Pull to Refresh
-                    refreshing={this.state.refreshing}
-                    onRefresh={this.getMyFrais.bind(this)}
-                    colors={["#475ee9"]}
-                />
-            }>
+            <View style={{ minHeight: 200 }}>
                 {loading ? <Loader loading={loading} /> : <this.ListMenu list={this.state.frais}></this.ListMenu>}
                 <Text style={{ fontFamily: "ProductSansRegular", textAlign: "center", color: "#475ee9" }}>Aucune autre fiche de frais à afficher</Text>
                 <Text style={{ fontFamily: "ProductSansRegular", textAlign: "center", color: "#475ee9" }}>Glissez vers le bas pour raffraichir <Icon name="arrow-up"></Icon></Text>
-            </ScrollView>
+            </View>
 
         )
     }
@@ -115,8 +98,6 @@ export default class ListFrais extends React.Component {
 
     ListMenu = (props) =>
         (
-            <View>
-                {
                     <FlatList
                         data={props.list}
                         renderItem={this._renderItem}
@@ -124,9 +105,9 @@ export default class ListFrais extends React.Component {
                         removeClippedSubviews={true}
                         initialNumToRender={9}
                         legacyImplementation={true}
+                        refreshing={this.state.refreshing}
+                        onRefresh={() => this.getMyFrais()}
                     />
-                }
-            </View>
         )
 
 
@@ -136,7 +117,7 @@ export default class ListFrais extends React.Component {
             <View>
                 {
                     checkDate(item.created_at, index) &&
-                    <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansBold" }} element={Text}>{item.created_at}</Moment>
+                    <Text style={{ fontFamily: "ProductSansBold" }}>{lastDate}</Text>
                 }
                 <List.Item
                     title={`Frais de ${item.type.libelle}`}
@@ -154,28 +135,19 @@ export default class ListFrais extends React.Component {
 }
 
 
-const calendarStrings = {
-    lastDay: '[Hier à] HH:mm',
-    sameDay: "[Aujourd'hui à] HH:mm",
-    lastWeek: '[Last] dddd [at] LT',
-    sameElse: 'L'
-};
 
 
 
-
-let lastDate = new Date("2001-03-09").getDate();
-
-
+let lastDate = new Date("2001-03-09").toLocaleDateString();
 const checkDate = (date, i): boolean => {
     if (i == 0) {
-        lastDate = new Date(date).getDate();
+        lastDate = new Date(date).toLocaleDateString();
         return true;
     }
-    if (lastDate != new Date(date).getDate()) {
-        lastDate = new Date(date).getDate();
+    if (lastDate != new Date(date).toLocaleDateString()) {
+        lastDate = new Date(date).toLocaleDateString();
         return true;
     }
-    lastDate = new Date(date).getDate()
+    lastDate = new Date(date).toLocaleDateString()
     return false;
 }

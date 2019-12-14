@@ -38,11 +38,11 @@ export default class MyFraisScreen extends React.Component<Props> {
                     <Text style={styles.title}>Mes fiches de frais</Text>
                     <Text style={styles.subtitle}>Historique de vos déclaration</Text>
 
-                    <ScrollView style={{ marginTop: 15 , marginBottom : 30}}>
+                    <View style={{ marginTop: 15 , marginBottom : 30}}>
                         <List.Section>
                             <ListFrais></ListFrais>
                         </List.Section>
-                    </ScrollView>
+                    </View>
                 </View>
             </>
         )

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import UserService from '../../services/UserService';
 import Moment from 'react-moment';
-
+import LottieView from 'lottie-react-native';
 
 
 export default class ProfileScreen extends React.Component {
@@ -21,7 +21,7 @@ export default class ProfileScreen extends React.Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
     }
-
+    animation;
 
     state = {
         isDisplayed: true,
@@ -50,10 +50,10 @@ export default class ProfileScreen extends React.Component {
 
 
 
-    _GenerateQRValue = () :string =>{
-        const {user} = this.state;
+    _GenerateQRValue = (): string => {
+        const { user } = this.state;
         return `MECARD:N:${user.lastname},${user.firstname};ADR:58 Rue Pierre Dupont 69004 Croix Rousse ;Note: Visiteur chez GSB;TEL:0611286286;EMAIL:${user.lastname}@gsb.com;;`;
-    } 
+    }
 
 
     render() {
@@ -70,7 +70,10 @@ export default class ProfileScreen extends React.Component {
 
                             {this.state.isDisplayed ?
 
-                                <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
+                                <LottieView source={require('../../assets/animations/user.json')} style={{ height: 150, alignSelf: "center" }} autoPlay loop ref={animation => {
+                                    this.animation = animation;
+                                }} />
+                                // <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
                                 :
                                 <View style={{ alignSelf: 'center', height: 150 }}>
                                     <QRCode size={150} color="#455eee" value={this._GenerateQRValue()} ></QRCode>

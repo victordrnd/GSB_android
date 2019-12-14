@@ -109,7 +109,7 @@ export default class RestaurationForm extends React.PureComponent {
                                 </>
                             )}
                         </View>
-                        <Button icon={<Icon name="download" size={15} color="white" />} title="Choisir un fichier" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
+                        <Button icon={<Icon name="camera" size={15} color="white" style={{marginHorizontal : 5, marginVertical : 8}}/>} title="Prendre une photo" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
                     </Card>
 
 

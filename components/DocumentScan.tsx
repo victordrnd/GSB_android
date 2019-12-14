@@ -1,18 +1,12 @@
-import React, { Component, useRef } from "react";
-import Icon from 'react-native-vector-icons/Feather';
+import React from "react";
 import {
     View,
-    StyleSheet,
-    Image,
-    TouchableOpacity,
-    ScrollView,
-    StatusBar
+    PermissionsAndroid
 } from 'react-native';
 import DocumentScanner from "@woonivers/react-native-document-scanner"
 import { NavigationScreenProp, NavigationState, withNavigation } from "react-navigation";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import RNFS from 'react-native-fs';
-import {Button} from 'react-native-paper'; 
 
 interface NavigationParams {
 }
@@ -31,6 +25,19 @@ const options = {
 class DocumentScan extends React.Component<Props> {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount(){
+        const granted = PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: "Ouvrir l'appareil photo",
+              message: '',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
     }
 
     async onScan(res) {

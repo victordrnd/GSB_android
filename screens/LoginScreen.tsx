@@ -30,6 +30,7 @@ export class LoginScreen extends Component<Props> {
                 this.props.navigation.navigate('Home');
             },
             (error) => {
+                console.log(error);
                 alert('Identifiants incorrects')
             });
         } else {
