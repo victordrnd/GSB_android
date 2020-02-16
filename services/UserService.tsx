@@ -27,7 +27,7 @@ class UserService {
     token :string;
 
     async populate() {
-        console.log(this.tokenObservable);
+        //console.log(this.tokenObservable);
         if (await this.tokenObservable.subscribe(token => this.token = token)) {
             try {
                 await this.http

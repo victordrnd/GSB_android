@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { Transition } from 'react-native-reanimated';
@@ -22,17 +22,18 @@ import NavigationService from './services/NavigationService';
 import Service from './services/Service';
 import UserService from './services/UserService';
 import DocumentScan from './components/DocumentScan';
-
 //TODO delete
 // AsyncStorage.clear();
 export default class App extends React.Component {
   async componentDidMount() {
-    await AsyncStorage.getItem('@token').then( async (token) => {
+    await AsyncStorage.getItem('@token').then(async (token) => {
       UserService.tokenSubject.next(token);
       Service.token = token;
       await UserService.populate();
     });
   }
+
+
 
   render() {
     return (
@@ -47,7 +48,6 @@ export default class App extends React.Component {
 
 
 
-
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   Frais: { screen: FraisScreen },
@@ -55,7 +55,7 @@ const MainNavigator = createStackNavigator({
   Profile: { screen: ProfileScreen },
   MyFrais: { screen: MyFraisScreen },
   FraisDetails: { screen: FraisDetailsScreen },
-  Scanner : {screen: DocumentScan}
+  Scanner: { screen: DocumentScan }
 },
   {
     initialRouteName: 'Home',
@@ -80,10 +80,10 @@ const AuthNavigator = createStackNavigator({
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
 },
-{
-  headerMode : "none",
-  transitionConfig: (nav) => flipY()
-})
+  {
+    headerMode: "none",
+    transitionConfig: (nav) => flipY()
+  })
 
 
 
@@ -104,12 +104,12 @@ const theme = {
 
 AppNavigator = createAppContainer(createAnimatedSwitchNavigator(
   {
-    AuthLoading : AuthLoadingScreen,
-    App : MainNavigator,
-    Auth : AuthNavigator
+    AuthLoading: AuthLoadingScreen,
+    App: MainNavigator,
+    Auth: AuthNavigator
   },
   {
-    initialRouteName : 'AuthLoading',
+    initialRouteName: 'AuthLoading',
     transition: (
       <Transition.Together>
         <Transition.Out

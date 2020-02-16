@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "994162446040",
+    "firebase_url": "https://gsb-laboratoire.firebaseio.com",
+    "project_id": "gsb-laboratoire",
+    "storage_bucket": "gsb-laboratoire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994162446040:android:c4f0fb695ed68b5a54d1ad",
+        "android_client_info": {
+          "package_name": "com.gsb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994162446040-6g77oul5rmoqdgu338bkpna41bejlq01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC97tryXwGUaKJ6Wfg3HT2DeViVNe0B35A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994162446040-6g77oul5rmoqdgu338bkpna41bejlq01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

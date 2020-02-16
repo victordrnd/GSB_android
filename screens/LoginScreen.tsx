@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import UserService from '../services/UserService';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import messaging from '@react-native-firebase/messaging';
 interface NavigationParams {
     my_param: string;
 }
@@ -20,11 +21,14 @@ export class LoginScreen extends Component<Props> {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        fcm_token : ""
     }
 
     async submitForm() {
         if (this.state.email && this.state.password) {
+            const fcmToken = await messaging().getToken();
+            await this.setState({ fcm_token: fcmToken });
             await UserService.login(this.state, async (res) => {
                 await UserService.setAuth(res);
                 this.props.navigation.navigate('Home');

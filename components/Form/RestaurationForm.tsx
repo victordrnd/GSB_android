@@ -12,7 +12,6 @@ import ImagePicker from 'react-native-image-picker'
 import FraisService from '../../services/FraisService';
 import NavigationService from '../../services/NavigationService';
 import Loader from '../Loader';
-import environment from '../../environments/environment';
 import ImageView from 'react-native-image-view';
 
 export default class RestaurationForm extends React.PureComponent {
@@ -27,26 +26,13 @@ export default class RestaurationForm extends React.PureComponent {
 
     validate() {
         let { montant, photo_url, description } = this.state;
-        if (this.state.montant != '' && photo_url != null && description != '') {
+        if (montant != '' && photo_url != null && description != '') {
             return true;
         }
         return false;
     }
 
     handleChoosePhoto = () => {
-        // const options = {
-        //     noData: false,
-        //     quality: 0.5
-        // }
-
-
-        // ImagePicker.launchCamera(options, response => {
-        //     if (response.uri) {
-        //         this.setState({ photo_url: response, photo: response.data });
-
-        //     }
-        // })
-
         NavigationService.navigate('Scanner', {
             onScanned : (photo) => {
                 this.setState({photo_url : photo });
