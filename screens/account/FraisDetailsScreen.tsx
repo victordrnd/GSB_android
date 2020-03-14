@@ -63,9 +63,9 @@ export default class FraisDetailsScreen extends React.Component<Props> {
                 shadowRadius: 0,
                 elevation: 0,
             },
-            headerTintColor: '#475ee9',
+            headerTintColor: '#7a62ff',
             headerTitle: (
-                <View style={{ backgroundColor: '#475ee9', height: 50 }}>
+                <View style={{ backgroundColor: '#7a62ff', height: 50 }}>
                     <Image source={require('../../assets/logo.png')} style={{
                         width: 40, height: 40, marginTop: 5
                     }} />
@@ -125,7 +125,7 @@ export default class FraisDetailsScreen extends React.Component<Props> {
 
                     <View style={{ marginTop: 15 }}>
                         <View>
-                            <LinearGradient style={{ marginTop: 40, height: 150, borderRadius: 8 }} colors={['#3e5be6', '#1f2650']} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
+                            <LinearGradient style={{ marginTop: 40, height: 150, borderRadius: 8 }} colors={['#3e5be6', '#7a62ff']} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
 
                                 <Text style={{ color: 'white', padding: 20, fontFamily: "ProductSansRegular" }}>Statut de la déclaration :</Text>
                                 <Text style={{ fontSize: 24, color: 'white', textAlign: 'center', fontFamily: "ProductSansRegular" }}>{this.state.montant} EUR</Text>
@@ -195,7 +195,7 @@ let styles = StyleSheet.create({
         elevation: 0
     },
     editButton: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         width: '100%',
         height: '100%',
         borderRadius: 0
@@ -217,7 +217,7 @@ let styles = StyleSheet.create({
         fontFamily: "ProductSansRegular"
     },
     confirmButton: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         width: '80%',
         height: 45,
         borderRadius: 30,

@@ -33,7 +33,7 @@ const ListMenu = () =>
                         <ListItem
                             key={i}
                             title={l.name}
-                            leftAvatar={<Icon name={l.icon} size={20} color="#adb8fa" />}
+                            leftAvatar={<Icon name={l.icon} size={20} color="#7a62ff" />}
                             titleStyle={{ color: 'black', fontFamily : "ProductSansBold" }}
                             subtitleStyle={{fontFamily : "ProductSansItalic"}}
                             chevron={<Icon name="chevron-right" size={15} color="grey" />}
@@ -60,15 +60,15 @@ export default class MyAccountScreen extends React.Component {
                 shadowRadius: 0,
                 elevation: 0,
             },
-            headerTintColor: '#475ee9',
+            headerTintColor: '#7a62ff', 
             headerTitle: (
-                <View style={{ backgroundColor: '#475ee9', height: 50 }}>
+                <View style={{ backgroundColor: '#7a62ff', height: 50 }}>
                     <Image source={require('../../assets/logo.png')} style={{
                         width: 40, height: 40, marginTop: 5
                     }} />
                 </View>
             ),
-            headerRight: <Icon name="power-off" size={20} color="#475ee9" style={{ elevation: 1, padding: 20 }} onPress={() => {
+            headerRight: <Icon name="power-off" size={20} color="#7a62ff" style={{ elevation: 1, padding: 20 }} onPress={() => {
                 Alert.alert(
                     'Déconnexion',
                     'Etes vous sûr de vouloir vous déconnecter ?',
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
 
 const chartConfig =
 {
-    backgroundColor: "#475ee9",
-    backgroundGradientFrom: "#475ee9",
+    backgroundColor: "#7a62ff",
+    backgroundGradientFrom: "#7a62ff",
     backgroundGradientTo: "#fff",
     decimalPlaces: 3, // optional, defaults to 2dp
     color: (opacity = 0.6) => `rgba(255, 255, 255, ${opacity})`,

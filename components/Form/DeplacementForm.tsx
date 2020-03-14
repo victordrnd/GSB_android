@@ -138,17 +138,17 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#455eee'
+        borderColor: '#7a62ff'
     },
     confirmButton: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         width: '100%',
         height: '100%',
         borderRadius: 0
     },
     uploadButton: {
         width: 250,
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         marginVertical: 20,
         justifyContent: 'center',
         alignSelf: 'center'

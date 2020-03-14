@@ -65,9 +65,9 @@ export default class MyFraisScreen extends React.Component<Props> {
                 shadowRadius: 0,
                 elevation: 0,
             },
-            headerTintColor: '#475ee9',
+            headerTintColor: '#7a62ff',
             headerTitle: (
-                <View style={{ backgroundColor: '#475ee9', height: 50 }}>
+                <View style={{ backgroundColor: '#7a62ff', height: 50 }}>
                     <Image source={require('../../assets/logo.png')} style={{
                         width: 40, height: 40, marginTop: 5
                     }} />
@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         marginHorizontal: 10,
         backgroundColor: '#fff',
-        borderColor: '#222a5b'
+        borderColor: '#7a62ff'
     },
     confirmButton: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         width: '100%',
         height: '100%',
         borderRadius: 0

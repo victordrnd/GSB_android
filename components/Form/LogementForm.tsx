@@ -2,36 +2,25 @@ import React, { PureComponent } from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {
     View,
-    ScrollView,
     StyleSheet,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    ScrollView
 } from 'react-native';
 import { Button, Card, Input } from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker'
-import NavigationService from '../../services/NavigationService';
 import FraisService from '../../services/FraisService';
+import NavigationService from '../../services/NavigationService';
+import Loader from '../Loader';
 import ImageView from 'react-native-image-view';
 
-
-
-export default class TeletravailForm extends React.PureComponent {
+export default class LogementForm extends React.PureComponent {
 
     state = {
         montant: '',
         description: '',
         photo_url: null,
-        isImageViewVisible : false
-    }
-
-
-
-    handleChoosePhoto = () => {
-        NavigationService.navigate('Scanner', {
-            onScanned: (photo) => {
-                this.setState({ photo_url: photo });
-            }
-        })
+        loading: false,
+        isImageViewVisible: false
     }
 
     validate() {
@@ -42,15 +31,22 @@ export default class TeletravailForm extends React.PureComponent {
         return false;
     }
 
+    handleChoosePhoto = () => {
+        NavigationService.navigate('Scanner', {
+            onScanned : (photo) => {
+                this.setState({photo_url : photo });
+            }
+        })
+    }
 
     async saveFrais() {
-        this.setState({ loading: true });
         if (this.validate()) {
+            this.setState({ loading: true });
             let obj = {
                 montant: this.state.montant,
                 description: this.state.description,
                 photo: this.state.photo_url.uri,
-                type_id: 3
+                type_id: 4
             };
             await FraisService.create(obj, () => {
                 this.setState({ loading: false });
@@ -63,16 +59,23 @@ export default class TeletravailForm extends React.PureComponent {
     }
 
     render() {
-        const photo = this.state.photo_url;
+        const photo = this.state.photo_url
         return (
             <>
                 <ScrollView>
-                    <Input label='Montant en €' keyboardType={'numeric'} style={styles.inputs} value={this.state.montant} leftIcon={<Icon name='credit-card' size={24} color='grey' style={{ marginLeft: -15 }} />}
-                        onChangeText={montant => this.setState({ montant })} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}></Input>
+                    <Loader
+                        loading={this.state.loading} />
+                    <Card containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
 
-                    <Input label="Description" multiline numberOfLines={4} keyboardType={'default'} style={styles.inputs} value={this.state.description}
-                        onChangeText={description => this.setState({ description })} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}></Input>
+                        <Input label='Montant en €' keyboardType={'numeric'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.montant} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={montant => this.setState({ montant })}
+                            leftIcon={<Icon name='credit-card' size={24} color='grey' style={{ marginLeft: -15 }} />}></Input>
 
+                        <Input label="Description" keyboardType={'default'} underlineColorAndroid='transparent' style={styles.inputs} value={this.state.description} labelStyle={{ fontWeight: "normal" }} containerStyle={{ marginVertical: 10 }}
+                            onChangeText={description => this.setState({ description })}
+                            leftIcon={<Icon name='hash' size={24} color='grey' style={{ marginLeft: -15 }} />}></Input>
+
+                    </Card>
                     <Card title="Justificatif de frais" containerStyle={{ borderColor: 'transparent', elevation: 0 }}>
 
                         <View>
@@ -82,7 +85,7 @@ export default class TeletravailForm extends React.PureComponent {
                                         <Image source={{ uri: photo.data.croppedImage }} style={{ width: "100%", height: 200 }}></Image>
                                     </TouchableOpacity>
                                     <ImageView
-                                        images={[{ source: { uri: photo.data.croppedImage } }]}
+                                        images={[{ source: {uri : photo.data.croppedImage } }]}
                                         imageIndex={0}
                                         isVisible={this.state.isImageViewVisible}
                                         onClose={() => this.setState({ isImageViewVisible: false })}
@@ -91,16 +94,15 @@ export default class TeletravailForm extends React.PureComponent {
                                 </>
                             )}
                         </View>
-                        <Button icon={<Icon name="camera" size={15} color="white" style={{ marginHorizontal: 5, marginVertical: 8 }} />} title="Prendre une photo" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
+                        <Button icon={<Icon name="camera" size={15} color="white" style={{marginHorizontal : 5, marginVertical : 8}}/>} title="Prendre une photo" onPress={this.handleChoosePhoto} buttonStyle={styles.uploadButton} />
                     </Card>
-
 
 
 
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 0, height: 50, width: '100%' }}>
 
-                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.saveFrais()}/>
+                    <Button title="Envoyer" buttonStyle={styles.confirmButton} onPress={() => this.saveFrais()} />
                 </View>
             </>
         )

@@ -51,7 +51,7 @@ export class LoginScreen extends Component<Props> {
             <>
                 <GestureRecognizer onSwipeLeft={this.onSwipeLeft} style={{height:"100%"}}>
                     <View>
-                        <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
+                        <StatusBar backgroundColor='#7a62ff' barStyle='light-content'></StatusBar>
                         <View style={styles.headerView} >
                             <Image source={require('../assets/logo.png')} style={{ width: 80, height: 80, alignSelf: "center", marginTop: 20, paddingBottom: 20 }} />
                             <View>
@@ -75,7 +75,7 @@ export class LoginScreen extends Component<Props> {
                                     onChangeText={password => this.setState({ password })}
                                     leftIcon={<Icon name='lock' size={24} color='grey' style={{ marginLeft: -15 }} />} blurOnSubmit={false} onSubmitEditing={() => this.submitForm()}></Input>
 
-                                <Text style={{ marginTop: 20, textAlign: "right", color: '#455eee', fontFamily: "ProductSansRegular" }}>Mot de passe oublié ?</Text>
+                                <Text style={{ marginTop: 20, textAlign: "right", color: '#7a62ff', fontFamily: "ProductSansRegular" }}>Mot de passe oublié ?</Text>
                             </Card>
                         </View>
                     </View>
@@ -90,7 +90,7 @@ export class LoginScreen extends Component<Props> {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         height: 200,
         padding: 10,
     },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         borderColor: '#222a5b'
     },
     confirmButton: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         width: '80%',
         height: 45,
         borderRadius: 30,

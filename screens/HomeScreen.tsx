@@ -15,7 +15,7 @@ interface Props {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         height: 100,
         padding: 10
     },
@@ -44,7 +44,7 @@ export class HomeScreen extends React.Component<Props> {
         return (
             <View>
 
-                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
+                <StatusBar backgroundColor='#7a62ff' barStyle='light-content'></StatusBar>
 
                 <View style={styles.headerView} >
                     <Text style={styles.title}>Accueil</Text>

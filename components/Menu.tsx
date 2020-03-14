@@ -46,7 +46,7 @@ const ListMenu = () =>
                         <ListItem
                             key={i}
                             title={l.name}
-                            leftAvatar={<Icon name={l.icon} size={20} color="#455eee" />}
+                            leftAvatar={<Icon name={l.icon} size={20} color="#7a62ff" />}
                             titleStyle={{ color: 'black', fontFamily : "ProductSansBold" }}
                             chevron={<Icon name="chevron-right" size={15} color="grey" />}
                             subtitle={l.subtitle}

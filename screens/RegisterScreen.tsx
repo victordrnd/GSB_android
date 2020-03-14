@@ -25,7 +25,7 @@ export class RegisterScreen extends Component<Props> {
         return (
             <GestureRecognizer onSwipeRight={this.onSwipeRight}>
                 <ScrollView>
-                    <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
+                    <StatusBar backgroundColor='#7a62ff' barStyle='light-content'></StatusBar>
 
                     <View style={styles.headerView} >
                         <Image source={require('../assets/logo.png')} style={{ width: 80, height: 80, alignSelf: "center", marginTop: 20, paddingBottom: 20 }} />
@@ -52,7 +52,7 @@ let ScreenHeight = Dimensions.get("window").height - 100;
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         height: 200,
         padding: 10,
     },

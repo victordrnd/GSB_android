@@ -38,8 +38,8 @@ export class AuthLoadingScreen extends Component<Props> {
     render() {
         return (
             <>
-                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
-                <View style={{ backgroundColor: "#455eee", height: "100%", width: "100%" }}>
+                <StatusBar backgroundColor='#7a62ff' barStyle='light-content'></StatusBar>
+                <View style={{ backgroundColor: "#7a62ff", height: "100%", width: "100%" }}>
                     <Image source={require('../assets/logo-white2x.png')} style={{ alignSelf: "center", marginTop: 150, height: 100, width: 100 }}></Image>
                     <LottieView source={require('../assets/animations/dna2.json')} style={{ marginTop: 100, width: 200, alignSelf: "center" }} autoPlay loop ref={animation => {
                         this.animation = animation;

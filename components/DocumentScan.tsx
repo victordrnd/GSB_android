@@ -60,7 +60,7 @@ class DocumentScan extends React.Component<Props> {
                 <DocumentScanner
                     style={{ width: "100%", height: "107%", marginTop: -50 }}
                     onPictureTaken={this.onScan.bind(this)}
-                    overlayColor="#455eee"
+                    overlayColor="#7a62ff"
                     enableTorch={false}
                     quality={1}
                     detectionCountBeforeCapture={10}

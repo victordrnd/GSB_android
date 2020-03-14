@@ -6,6 +6,8 @@ import RestaurationForm from '../components/Form/RestaurationForm';
 import DeplacementForm from '../components/Form/DeplacementForm';
 import TeletravailForm from '../components/Form/TeletravailFrom';
 import { ScrollView } from 'react-native-gesture-handler';
+import TransportForm from '../components/Form/TransportForm';
+import LogementForm from '../components/Form/LogementForm';
 
 interface NavigationParams {
     name: any;
@@ -21,7 +23,7 @@ interface Props {
 
 const styles = StyleSheet.create({
     headerView: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         height: 100,
         padding: 10,
     },
@@ -55,12 +57,16 @@ export class FraisScreen extends Component<Props> {
             case "Télétravail":
                 form = <TeletravailForm></TeletravailForm>
                 break;
+            case "Transport":
+                form = <TransportForm></TransportForm>
+            case "Logement":
+                form = <LogementForm></LogementForm>
             default:
                 break;
         }
         return (
             <>
-                <StatusBar backgroundColor='#455eee' barStyle='light-content'></StatusBar>
+                <StatusBar backgroundColor='#7a62ff' barStyle='light-content'></StatusBar>
 
                 <View style={styles.headerView}>
                     <Text style={styles.title}>{name}</Text>

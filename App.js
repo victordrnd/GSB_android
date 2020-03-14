@@ -30,6 +30,7 @@ export default class App extends React.Component {
       UserService.tokenSubject.next(token);
       Service.token = token;
       await UserService.populate();
+      
     });
   }
 
@@ -61,7 +62,7 @@ const MainNavigator = createStackNavigator({
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#455eee',
+        backgroundColor: '#7a62ff',
         shadowOffset: { width: 0, height: 0, },
         shadowColor: 'white',
         shadowOpacity: 0,

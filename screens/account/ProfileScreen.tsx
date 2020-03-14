@@ -76,16 +76,16 @@ export default class ProfileScreen extends React.Component {
                                 // <Image source={{ uri: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 300 }}></Image>
                                 :
                                 <View style={{ alignSelf: 'center', height: 150 }}>
-                                    <QRCode size={150} color="#455eee" value={this._GenerateQRValue()} ></QRCode>
+                                    <QRCode size={150} color="#7a62ff" value={this._GenerateQRValue()} ></QRCode>
                                 </View>
                             }
                         </TouchableOpacity>
                         <Text h4 style={{ textAlign: 'center' }}>{this.state.user.firstname} {this.state.user.lastname}</Text>
                         <Text style={{ textAlign: 'center', color: 'grey', fontFamily: "ProductSansItalic" }}>Visiteur chez Galaxy Swiss Bourdin</Text>
 
-                        <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : ""} disabled></TextInput>
+                        <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.user.lastLogin.toString() ? " " : ""} disabled></TextInput>
                         <Text style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }}>{this.state.user.phone ? this.state.user.phone : "Non renseigné"}</Text>
-                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? this.state.user.lastLogin : ""} disabled></TextInput>
+                        <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? " " : ""} disabled></TextInput>
                         <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }} element={Text}>{this.state.user.lastLogin}</Moment>
                     </View>
                 </View>
