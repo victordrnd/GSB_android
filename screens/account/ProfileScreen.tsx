@@ -86,7 +86,7 @@ export default class ProfileScreen extends React.Component {
                         <TextInput label="Numéro de téléphone" style={styles.inputs} value={this.state.user.lastLogin.toString() ? " " : ""} disabled></TextInput>
                         <Text style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }}>{this.state.user.phone ? this.state.user.phone : "Non renseigné"}</Text>
                         <TextInput label="Dernière connexion" style={styles.inputs} value={this.state.user.lastLogin.toString() ? " " : ""} disabled></TextInput>
-                        <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }} element={Text}>{this.state.user.lastLogin}</Moment>
+                        <Moment calendar={calendarStrings} style={{ fontFamily: "ProductSansRegular", marginTop: -40, marginLeft: 22 }} element={Text}>{this.state.user.lastLogin || null}</Moment>
                     </View>
                 </View>
             </>

@@ -54,6 +54,8 @@ class UserService {
     async login(obj, callback, errorCallback) {
         this.http.post(`${environment.apiUrl}/auth/login`, obj)
             .then((res) => {
+                res.data.result.user.lastLogin = new Date();
+                this.currentUserSubject.next(res.data.result.user);
                 callback(res.data.result);
             })
             .catch((error) => {
