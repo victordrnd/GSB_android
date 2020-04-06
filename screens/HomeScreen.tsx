@@ -4,6 +4,7 @@ import { StatusBar, View, StyleSheet } from 'react-native';
 import Menu from '../components/Menu';
 import { NavigationScreenProp, NavigationState } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
+import Service from '../services/Service';
 interface NavigationParams {
 }
 

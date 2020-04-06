@@ -7,8 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 class FraisService {
 
     http: AxiosInstance = Service.getInstance();
+    socket
     constructor() {
         this.http = Service.getInstance();
+        
     }
 
 
@@ -29,7 +31,8 @@ class FraisService {
 
     async create(obj, callback): Promise<any> {
         this.http.post(`${environment.apiUrl}/frais/create`, obj)
-            .then(res => {
+        .then(res => {
+                Service.getSocket().emit('frais.create', {});
                 callback(res.data.result);
             })
             .catch(error => {

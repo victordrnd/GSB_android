@@ -1,10 +1,12 @@
 import axios, { AxiosInstance } from 'axios';
-
+import io  from 'socket.io-client/dist/socket.io';
+import environment from '../environments/environment';
 
 class Service {
 
     static instance : AxiosInstance;
     static token : string;
+    static socket;
 
     static getInstance() : AxiosInstance{
         if(Service.instance == undefined){
@@ -18,6 +20,13 @@ class Service {
         }
 
         return Service.instance;
+    }
+
+    static getSocket(){
+        if(Service.socket == undefined){
+            Service.socket = io(environment.socketServer);
+        }
+        return Service.socket;
     }
 
     private constructor() {
