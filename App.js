@@ -29,7 +29,6 @@ export default class App extends React.Component {
     await AsyncStorage.getItem('@token').then(async (token) => {
       UserService.tokenSubject.next(token);
       Service.token = token;
-      Service.getSocket();
       await UserService.populate();
       
     });

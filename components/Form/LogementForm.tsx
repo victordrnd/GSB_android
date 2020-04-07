@@ -46,7 +46,7 @@ export default class LogementForm extends React.PureComponent {
                 montant: this.state.montant,
                 description: this.state.description,
                 photo: this.state.photo_url.uri,
-                type_id: 4
+                type_id: 5
             };
             await FraisService.create(obj, () => {
                 this.setState({ loading: false });

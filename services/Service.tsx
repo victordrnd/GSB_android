@@ -25,6 +25,8 @@ class Service {
     static getSocket(){
         if(Service.socket == undefined){
             Service.socket = io(environment.socketServer);
+            console.log(Service.socket);
+            console.log('socket generated');
         }
         return Service.socket;
     }

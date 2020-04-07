@@ -33,6 +33,7 @@ class UserService {
                 await this.http
                     .get(`${environment.apiUrl}/auth/current`).then(res => {
                         this.setAuth(res.data.result);
+                        Service.getSocket().emit('user.login', res.data.result.user);
                         this.isAuthenticatedSubject.next(true);
                         res.data.result.user.lastLogin = new Date();
                         this.currentUserSubject.next(res.data.result.user);
@@ -54,6 +55,7 @@ class UserService {
     async login(obj, callback, errorCallback) {
         this.http.post(`${environment.apiUrl}/auth/login`, obj)
             .then((res) => {
+                console.log('exec');
                 res.data.result.user.lastLogin = new Date();
                 this.currentUserSubject.next(res.data.result.user);
                 callback(res.data.result);
@@ -79,6 +81,8 @@ class UserService {
     async setAuth({ user, token }) {
         await AsyncStorage.setItem('@token', token);
         Service.token = token;
+        console.log('set auth')
+        Service.getSocket().emit('user.login', user);
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
     }
@@ -95,9 +99,15 @@ class UserService {
 
 
     purgeAuth() {
+        this.currentUser.subscribe(usr => {
+
+            console.log(usr);
+            Service.getSocket().emit('user.disconnect', usr);
+        });
         this.destroyToken();
         this.currentUserSubject.next({});
         this.isAuthenticatedSubject.next(false);
+        return true;
     }
 
 }
