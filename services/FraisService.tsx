@@ -32,7 +32,7 @@ class FraisService {
     async create(obj, callback): Promise<any> {
         this.http.post(`${environment.apiUrl}/frais/create`, obj)
         .then(res => {
-                Service.getSocket().emit('frais.create', {});
+                Service.getSocket().emit('frais.create', res.data.result);
                 callback(res.data.result);
             })
             .catch(error => {
